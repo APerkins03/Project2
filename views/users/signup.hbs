@@ -1,0 +1,140 @@
+  <nav class="navbar">
+    <ul>
+     <li>
+        <p><a href="/"> Home </a></p>
+      </li>
+       <li id="to-left">
+        <p><a href="/menu"> Menu </a></p>
+        </li>
+       <li>
+        <p><a href="/aboutus"> About Us </a></p>
+      </li>
+      <li>
+        <p><a href="/events"> Events </a></p>
+      </li>
+      </ul>
+      </nav>
+<body>
+  <div class="form-container">
+    <h1>Signup</h1>
+    <form action="/signup" method="POST" id="form">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username">
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email">
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password">
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+
+
+
+
+<style>
+.navbar {
+      font-size: medium;
+      background-color: #333;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0;
+       position: fixed; 
+      top: 0; 
+    z-index: 999;
+      
+    }
+.navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between; 
+      width: 100%; 
+    }
+
+.navbar ul li {
+      margin: 0 10px;
+      flex: 1; 
+      text-align: center;
+    }
+
+.navbar ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+.navbar ul li#to-right {
+      margin-right: auto; 
+    }
+
+body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+
+    .form-container {
+      width: 400px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h1 {
+      text-align: center;
+    }
+
+    .form-container div {
+      margin-bottom: 10px;
+    }
+
+    .form-container label {
+      display: block;
+      font-weight: bold;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="email"],
+    .form-container input[type="password"] {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+
+
+
+
+
+
+
+</style>

@@ -1,0 +1,97 @@
+  <!DOCTYPE html>
+<html>
+<head>
+  
+  <nav class="navbar">
+    <ul>
+      <li id="to-left">
+        <p><a href="/menu"> Menu </a></p>
+        </li>
+        <li>
+        <p><a href="/bbq"> BBQ Competition </a></p>
+      </li>
+    <li>
+        <p><a href="/aboutus"> About Us </a></p>
+      </li>
+      <li>
+        <p><a href="/events"> Events </a></p>
+      </li>
+      <li id="to-right">
+        <a href="users/signup">Signup</a> <span> | </span>
+        <a href="users/login">Login</a> {{!-- !!! --}}
+      </li>
+    </ul>
+  </nav>
+  <div class="background-container">
+    <h1></h1>
+    <img src='./images/Donkeyslogo2023.JPG' alt="Image" class="image-with-outline">
+    </div>
+
+   <style>
+    body {
+      background-color: #4e4c4c; /* Replace with your desired color value */
+    }
+
+     .navbar {
+      font-size: medium;
+      background-color: #333;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+       position: fixed; /* Added: Position fixed to keep it at the top */
+      top: 0; /* Added: Align it to the top */
+     left: 0; /* Added: Align it to the left */
+    z-index: 999;
+      
+    }
+.navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between; /* Add this line */
+      width: 100%; /* Add this line */
+      
+    }
+
+    .navbar ul li {
+      margin: 0 10px;
+      flex: 1; /* Add this line */
+      text-align: center;
+      color: red;
+      
+    }
+
+    .navbar ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .navbar ul li#to-right {
+      margin-right: auto; /* Add this line */
+    }
+
+
+    .background-container {
+      /* background-image: url('./images/Donkeyslogo2023.JPG'); /* Replace with the path to your image */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-with-outline {
+      border: 2px solid red;
+    }
+  </style>
+</head>
+<body>
+    
+  <!-- Rest of your HTML content -->
+</body>
+</html>

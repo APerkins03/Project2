@@ -1,0 +1,78 @@
+  <!DOCTYPE html>
+<html>
+<head>
+  
+  <nav class="navbar">
+    <ul>
+        <li>
+        <p><a href="/"> Home </a></p>
+      </li>
+      <li id="to-left">
+        <p><a href="/menu"> Menu </a></p>
+        </li>
+        <li>
+        <p><a href="/bbq"> BBQ Competition </a></p>
+      </li>
+      <li>
+        <p><a href="/events"> Events </a></p>
+      </li>
+      <li id="to-right">
+        <a href="users/signup">Signup</a> <span> | </span>
+        <a href="users/login">Login</a> {{!-- !!! --}}
+      </li>
+    </ul>
+  </nav>
+
+  <h1 class="title">About Us</h1>
+
+
+  <style>
+.navbar {
+      font-size: medium;
+      background-color: #333;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+       position: fixed; /* Added: Position fixed to keep it at the top */
+      top: 0; /* Added: Align it to the top */
+     left: 0; /* Added: Align it to the left */
+    z-index: 999;
+      
+    }
+.navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between; /* Add this line */
+      width: 100%; /* Add this line */
+      
+    }
+
+    .navbar ul li {
+      margin: 0 10px;
+      flex: 1; /* Add this line */
+      text-align: center;
+      color: red;
+      
+    }
+
+    .navbar ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .navbar ul li#to-right {
+      margin-right: auto; /* Add this line */
+    }
+    .title {
+        padding-top: 40px;
+        color: white;
+        font-size: xx-large;
+        text-align: center;
+    }
+
+
+
+  </style>
