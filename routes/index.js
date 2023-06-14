@@ -14,7 +14,7 @@ const bbqRoutes = require("./bbq.routes");
 router.use("/bbq", bbqRoutes)
 
 const signupRoutes = require("./user.routes");
-router.use("/users/signup", signupRoutes)
+router.use("/signup", signupRoutes)
 
 const aboutusRoutes = require("./aboutus.routes");
 router.use("/aboutus", aboutusRoutes)
