@@ -22,6 +22,10 @@ const userSchema = new Schema(
           type: String,
           required: true
         },
+        verified: {
+          type: Boolean,
+          default: true
+        }
         // admin: {type: Boolean, default: false}
       },
       {
@@ -29,6 +33,6 @@ const userSchema = new Schema(
         timestamps: true
       }
 )
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

@@ -2,8 +2,12 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model.js');
 const bcryptjs = require('bcryptjs');
+const isLoggedIn = require("../utils/isLoggedin");
+
 
 const mongoose = require("mongoose");
+
+
 
 router.get("/signup", (req, res, next) => {
     res.render("users/signup");
@@ -53,28 +57,39 @@ router.post("/login", (req, res, next) => {
         return;
         // the following else if only happens if there was an actual user found with 
         // username equal to req.body.username
-      } else if (bcryptjs.compareSync(req.body.password, foundUser.password)) {
+    } else if (foundUser.passwordHash && bcryptjs.compareSync(password, foundUser.passwordHash)) {
         // inside thise else if only happens if the password matches
         
-        if(!foundUser.active){
-          req.flash("error", "Account is not active, please check your email to verify your account");
-          res.redirect("/login");
-          return;
+        if (foundUser.verified) {
+            req.session.currentUser = foundUser;
+            req.flash("success", "Successfully logged in");
+            res.redirect('/userprofile');
+          } else {
+            req.flash("error", "Account is not verified");
+            res.redirect("/login");
+          }
         } else {
-          req.session.currentUser = foundUser;
-          // ^ this is the magic right here this is how we log in
-          req.flash("success", "Successfully Logged In");
-          res.redirect('/userprofile');
-        } 
-      } else {
-        // this else only happens if we found the user with the username but the passwords didnt match
-        req.flash("error", "Password Do Not Match");
-        res.redirect("/login");
-        
-      }
-    })
-    .catch(error => next(error));
+          req.flash("error", "Password does not match");
+          res.redirect("/login");
+        }
+      })
+      .catch(error => next(error));
 
 });
 
-module.exports = router;
+
+
+router.get('/userprofile', (req, res, next) => {
+    User.findById(req.session.currentUser._id)
+      .then(foundUser => {
+        if (!foundUser) {
+          req.flash("error", "User not found");
+          res.redirect("/login");
+          return;
+        }
+        res.render('users/userprofile', { user: foundUser });
+      })
+      .catch(error => next(error));
+  });
+  
+  module.exports = router;
