@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/user.model.js');
 const bcryptjs = require('bcryptjs');
 const isLoggedIn = require("../utils/isLoggedin");
+const Competition = require('../models/competition.model.js');
 
 
 const mongoose = require("mongoose");
