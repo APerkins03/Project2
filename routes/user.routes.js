@@ -18,20 +18,32 @@ router.post("/signup", (req, res, next) => {
     
 const saltRounds = 10;
 
-const username= req.body.username;
-const password= req.body.password;
-const email= req.body.email;
-bcryptjs
-.genSalt(saltRounds)
-.then(salt => bcryptjs.hash(password, salt))
-.then(hashedPassword => {
+const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email;
 
-    User.create({username:username, passwordHash:hashedPassword, email:email})
-    .then(() => {
-        res.redirect("/login");
+  if (!username || !password || !email) {
+    // Handle missing fields
+    req.flash("error", "Please provide all the required information.");
+    res.redirect("/signup");
+    return;
+  }
+
+  bcryptjs
+    .genSalt(saltRounds)
+    .then((salt) => bcryptjs.hash(password, salt))
+    .then((hashedPassword) => {
+      // Log the values of password and hashedPassword for debugging
+      console.log("Password:", password);
+      console.log("Hashed Password:", hashedPassword);
+
+      User.create({ username: username, passwordHash: hashedPassword, email: email })
+        .then(() => {
+          res.redirect("/login");
+        })
+        .catch((error) => next(error));
     })
-})
-.catch(error => next(error));
+    .catch((error) => next(error));
 });
 
 router.get("/login", (req, res, next) => {
@@ -41,29 +53,18 @@ router.get("/login", (req, res, next) => {
 router.post("/login", (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
-    
-
-    // the first thing we do is just to simply search through our databse and see if we find a user with a username matching what the person just typed in
+  
     User.findOne({ username: req.body.username })
-    .then(foundUser => {
-        // this .then only happens after we search for a user with username equal to 
-        // req.body.username and the promise resolves successfully
-      if (!foundUser) {
-        // this if only happens we successfully queries the databse and there is no user with that username
-        req.flash("error", "Username or password Not Found");
-        // for now we'll just console log an error message if we cant find a user with that username
-        // we will add a package for error messages later
-        res.redirect("/login");
-        return;
-        // the following else if only happens if there was an actual user found with 
-        // username equal to req.body.username
-    } else if (foundUser.passwordHash && bcryptjs.compareSync(password, foundUser.passwordHash)) {
-        // inside thise else if only happens if the password matches
-        
-        if (foundUser.verified) {
+      .then(foundUser => {
+        if (!foundUser) {
+          req.flash("error", "Username or password not found");
+          res.redirect("/login");
+          return;
+        } else if (foundUser.passwordHash && bcryptjs.compareSync(password, foundUser.passwordHash)) {
+          if (foundUser.verified) {
             req.session.currentUser = foundUser;
             req.flash("success", "Successfully logged in");
-            res.redirect('/userprofile');
+            res.redirect('/userprofile'); // Update the redirection here
           } else {
             req.flash("error", "Account is not verified");
             res.redirect("/login");
@@ -74,22 +75,162 @@ router.post("/login", (req, res, next) => {
         }
       })
       .catch(error => next(error));
-
-});
-
+  });
 
 
-router.get('/userprofile', (req, res, next) => {
+
+  router.get('/userprofile', (req, res, next) => {
+    if (!req.session.currentUser || !req.session.currentUser._id) {
+      req.flash('error', 'User not found');
+      res.redirect('/login');
+      return;
+    }
+  
     User.findById(req.session.currentUser._id)
       .then(foundUser => {
         if (!foundUser) {
-          req.flash("error", "User not found");
-          res.redirect("/login");
+          req.flash('error', 'User not found');
+          res.redirect('/login');
           return;
         }
         res.render('users/userprofile', { user: foundUser });
       })
       .catch(error => next(error));
   });
+  router.post("/userprofile", (req, res, next) => {
+    const { teamName, headCook, fbaNum, address, city, state, zip, phone, email } = req.body;
+    const userData = {
+      teamName,
+      headCook,
+      fbaNum,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      email
+    };
   
+    // Update the user's profile in the database
+    User.findByIdAndUpdate(
+      req.session.currentUser._id,
+      userData,
+      { new: true }
+    )
+      .then(updatedUser => {
+        if (!updatedUser) {
+          req.flash('error', 'User not found');
+          res.redirect('/login');
+          return;
+        }
+  
+        req.flash('success', 'Profile updated successfully');
+        // Redirect to the myprofile page, passing the updated user data
+        res.redirect('/myprofile');
+      })
+      .catch(error => next(error));
+  });
+  
+  router.get('/myprofile', isLoggedIn, (req, res, next) => {
+    // Check if the user is logged in
+    if (!req.session.currentUser) {
+      res.redirect('/login');
+      return;
+    }
+  
+    // Retrieve the user's profile from the database
+    User.findById(req.session.currentUser._id)
+      .then(foundUser => {
+        if (!foundUser) {
+          req.flash('error', 'User not found');
+          res.redirect('/login');
+          return;
+        }
+  
+        res.render('users/myprofile', { user: foundUser });
+      })
+      .catch(error => next(error));
+  });
+
+  
+  router.post('/userprofile/update', isLoggedIn, (req, res, next) => {
+    if (!req.session.currentUser) {
+      res.redirect('/login');
+      return;
+    }
+  
+    User.findByIdAndUpdate(
+      req.session.currentUser._id,
+      req.body,
+      { new: true }
+    )
+      .then(updatedUser => {
+        if (!updatedUser) {
+          req.flash('error', 'User not found');
+          res.redirect('/login');
+          return;
+        }
+  
+        req.flash('success', 'Profile updated successfully');
+        res.redirect('/myprofile');
+      })
+      .catch(error => next(error));
+  });
+  
+  // Route to handle deleting the user profile
+  router.get('/myprofile', isLoggedIn, (req, res, next) => {
+    // Check if the user is logged in
+    if (!req.session.currentUser) {
+      res.redirect('/login');
+      return;
+    }
+  
+    // Retrieve the user's profile from the database
+    User.findById(req.session.currentUser._id)
+      .then(foundUser => {
+        if (!foundUser) {
+          req.flash('error', 'User not found');
+          res.redirect('/login');
+          return;
+        }
+  
+        res.render('users/myprofile', { user: req.body });
+      })
+      .catch(error => next(error));
+  });
+  
+  // Route to handle form submission and update user profile
+  router.post('/myprofile/update', isLoggedIn, (req, res, next) => {
+    // Check if the user is logged in
+    if (!req.session.currentUser) {
+      res.redirect('/login');
+      return;
+    }
+  
+    // Update the user's profile in the database
+    User.findByIdAndUpdate(
+      req.session.currentUser._id,
+      req.body,
+      { new: true }
+    )
+      .then(updatedUser => {
+        if (!updatedUser) {
+          req.flash('error', 'User not found');
+          res.redirect('/login');
+          return;
+        }
+  
+        req.flash('success', 'Profile updated successfully');
+        // Redirect to the myprofile page, passing the updated user data
+        res.redirect('/myprofile');
+      })
+      .catch(error => next(error));
+  });
+
+  
+  router.post("/logout", (req, res, next)=>{
+    req.session.destroy();
+    res.redirect("/");
+  });
+
   module.exports = router;

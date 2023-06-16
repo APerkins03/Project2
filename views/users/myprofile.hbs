@@ -19,10 +19,12 @@
       </ul>
       </nav>
 
+
+
 <body>
   <div class="form-container">
-    <h1>Application for BBQ Competition</h1>
-    <form action="/userprofile/update" method="POST">
+    <h1>My Profile</h1>
+    <form action="/myprofile/update" method="POST">
       <div>
         <label for="teamName">Team Name:</label>
         <input type="text" name="teamName" id="teamName" value="{{user.teamName}}">
@@ -59,10 +61,22 @@
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" value="{{user.email}}">
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit">Update Profile</button>
     </form>
+
+    <form action="/myprofile/delete" method="post">
+      <button type="submit" style="margin-top: 10px;">Delete Profile</button>
+    </form>
+
+    {{#if successMessage}}
+      <p class="success-message">{{successMessage}}</p>
+    {{/if}}
+    {{#if errorMessage}}
+      <p class="error-message">{{errorMessage}}</p>
+    {{/if}}
   </div>
 </body>
+
 
 <style>
 .navbar {
