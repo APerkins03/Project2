@@ -72,8 +72,34 @@ Please enter early as we expect spots to get filled quickly</div>
 </h2>
  </h1>
 
+<h1>Find Hotels in the area</h1>
+  <form action="/bbq" method="POST">
+    <label for="location">Location:</label>
+    <input type="text" name="location" id="location" required>
+    <button type="submit">Search Hotels</button>
+  </form>
 
-
+  {{#if hotelData}}
+  <h2>Hotel Results:</h2>
+  <ul>
+    {{#each hotelData}}
+    <li>
+      <h3>{{this.name}}</h3>
+      <p>Address: {{this.address}}</p>
+      <p>City: {{this.city}}</p>
+      <p>State: {{this.state}}</p>
+      <!-- Display other hotel information as needed -->
+    </li>
+    {{/each}}
+  </ul>
+  {{else}}
+  {{#if error}}
+  <p>{{error}}</p>
+  {{else}}
+  <p>No hotels found.</p>
+  {{/if}}
+  {{/if}}
+</body>
 
 
 

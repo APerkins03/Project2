@@ -4,6 +4,8 @@ const User = require('../models/user.model.js');
 const bcryptjs = require('bcryptjs');
 const isLoggedIn = require("../utils/isLoggedin");
 const Competition = require('../models/competition.model.js');
+const axios = require('axios');
+const searchHotels = require('./hotelApi');
 
 
 const mongoose = require("mongoose");
@@ -227,6 +229,25 @@ router.post("/login", (req, res, next) => {
       })
       .catch(error => next(error));
   });
+
+  router.get('/bbq', async (req, res, next) => {
+    res.render('bbqcompetition');
+  });
+  
+  router.post('/bbq', async (req, res, next) => {
+    try {
+      const location = req.body.location;
+      const hotelData = await searchHotels(location);
+  
+      res.render('bbq', { hotelData: hotelData.results });
+    } catch (error) {
+      console.error(error);
+      res.render('bbq', { error: 'Failed to fetch hotel data' });
+    }
+  });
+  
+ 
+ 
 
   
   router.post("/logout", (req, res, next)=>{
