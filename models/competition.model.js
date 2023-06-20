@@ -1,7 +1,7 @@
 const { model } = require("mongoose");
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-//const User = mongoose.model('User', userSchema);
+//const User = require('../user'); 
 
 const competitionSchema = new Schema({
     teamName: {
@@ -38,6 +38,11 @@ const competitionSchema = new Schema({
     },
     email: {
       type: String,
+      required: true
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true
     }
   }, {

@@ -67,7 +67,7 @@ router.post("/login", (req, res, next) => {
           if (foundUser.verified) {
             req.session.currentUser = foundUser;
             req.flash("success", "Successfully logged in");
-            res.redirect('/userprofile'); // Update the redirection here
+            res.redirect('/myprofile'); // Update the redirection here
           } else {
             req.flash("error", "Account is not verified");
             res.redirect("/login");
@@ -80,6 +80,24 @@ router.post("/login", (req, res, next) => {
       .catch(error => next(error));
   });
 
+  router.get("/appchanges", (req, res, next) => {
+    res.render("users/appchanges");
+});
+router.get('/appchanges', async (req, res) => {
+  try {
+    // Get the logged-in user ID from the session or authentication data
+    const userId = req.user.id;
+
+    // Fetch the competition data for the logged-in user
+    const competition = await Competition.findOne({ user: userId });
+
+    // Pass the competition data to the template
+    res.render('appchanges', { competition });
+  } catch (error) {
+    // Handle any errors
+    res.render('error', { error });
+  }
+});
 
 
   router.get('/userprofile', (req, res, next) => {

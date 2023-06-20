@@ -50,6 +50,7 @@ app.set('trust proxy', 1);
     })
   );
 
+  app.use(express.urlencoded({ extended: true }));
 
 
   app.use((req, res, next)=>{

@@ -27,3 +27,5 @@ app.get('/myprofile', async (req, res) => {
       res.status(500).send('Server error');
     }
   });
+  
+  module.exports = router;
