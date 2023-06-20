@@ -16,7 +16,7 @@ const hbs = require("hbs");
 const app = express();
 app.set('trust proxy', 1);
 
-
+const fileUpload = require('express-fileupload');
 
 const cookieParser = require("cookie-parser");
 

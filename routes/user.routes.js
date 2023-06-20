@@ -2,11 +2,23 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model.js');
 const bcryptjs = require('bcryptjs');
-const isLoggedIn = require("../utils/isLoggedin");
+const isLoggedIn = require('../utils/isLoggedin');
 const Competition = require('../models/competition.model.js');
-const axios = require('axios');
 const searchHotels = require('./hotelApi');
-const session = require("express-session");
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'uploads/');
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.fieldname + '-' + Date.now());
+//   }
+// });
+
+
+
 
 const saltRounds = 10;
 
@@ -325,6 +337,51 @@ router.get('/userprofile', (req, res, next) => {
       })
       .catch(error => next(error));
   });
+
+  router.get("/photos", (req, res, next) => {
+    res.render("users/photos");
+});
+
+
+//   router.get('/photos', async (req, res) => {
+//     try {
+//       // Check if a file was uploaded
+//       if (!req.file) {
+//         return res.status(400).send('No file uploaded');
+//       }
+//       // Upload the file to Cloudinary
+//       const photo = req.files.photo;
+//       const result = await cloudinary.api.resources({ type: 'upload' });
+  
+//       // Handle the uploaded photo data (e.g., save to a database, return a response)
+//       // Example: Save the photo URL to a user's profile
+//       // const user = await User.findById(req.user.id);
+//       // user.photoUrl = result.secure_url;
+//       // await user.save();
+  
+//       // Return a response with the uploaded photo data
+//       res.render('photos', { photos: result.resources });
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send('Server Error');
+//     }
+//   });
+  
+  
+  
+// router.get('/photos', (req, res) => {
+//   // Fetch the uploaded photos from Cloudinary
+//   cloudinary.api.resources({ type: 'upload' })
+//     .then((result) => {
+//       const photos = result.resources;
+//       res.render('photos', { photos });
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       res.render('photos', { error: 'Failed to fetch photos' });
+//     });
+// });
+
 
   router.get('/bbq', async (req, res, next) => {
     res.render('bbqcompetition');

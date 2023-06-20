@@ -1,0 +1,13 @@
+<head>
+  <title>Uploaded Photos</title>
+</head>
+<body>
+  <h1>Uploaded Photos</h1>
+  {{#if photos.length}}
+    {{#each photos}}
+      <img src="{{secure_url}}" alt="{{public_id}}">
+    {{/each}}
+  {{else}}
+    <p>No photos uploaded yet.</p>
+  {{/if}}
+</body>
