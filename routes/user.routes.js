@@ -6,6 +6,7 @@ const isLoggedIn = require("../utils/isLoggedin");
 const Competition = require('../models/competition.model.js');
 const axios = require('axios');
 const searchHotels = require('./hotelApi');
+const session = require("express-session");
 
 const saltRounds = 10;
 
@@ -71,6 +72,40 @@ router.post("/login", (req, res, next) => {
 router.get("/appchanges", (req, res, next) => {
   res.render("users/appchanges");
 });
+router.post('/appchanges', isLoggedIn, (req, res, next) => {
+  const { teamName, headCook, fbaNum, address, city, state, zip, phone, email } = req.body;
+  const userData = {
+    teamName,
+    headCook,
+    fbaNum,
+    address,
+    city,
+    state,
+    zip,
+    phone,
+    email
+  };
+
+  // Update the user's profile in the database
+  User.findByIdAndUpdate(
+    req.session.currentUser._id,
+    userData,
+    { new: true }
+  )
+    .then(updatedUser => {
+      if (!updatedUser) {
+        req.flash('error', 'User not found');
+        res.redirect('/login');
+        return;
+      }
+
+      // Redirect to the appropriate page after updating the user profile
+      req.flash('success', 'Profile updated successfully');
+      res.redirect('/myprofile');
+    })
+    .catch(error => next(error));
+});
+
 
 router.get('/userprofile', (req, res, next) => {
     if (!req.session.currentUser || !req.session.currentUser._id) {
@@ -181,7 +216,7 @@ router.get('/userprofile', (req, res, next) => {
       res.redirect('/login');
       return;
     }
-
+  
     const userId = req.session.currentUser._id;
     const {
       teamName,
@@ -209,59 +244,59 @@ router.get('/userprofile', (req, res, next) => {
     };
   
     User.findByIdAndUpdate(userId, req.body, { new: true })
-    .then(updatedUser => {
-      if (!updatedUser) {
-        req.flash('error', 'User not found');
-        res.redirect('/login');
-        return;
-      }
-
-      // Check if a competition already exists for the user
-      Competition.findOne({ user: userId })
-        .then(existingCompetition => {
-          if (existingCompetition) {
-            // Update the existing competition
-            existingCompetition.set(competitionData);
-            return existingCompetition.save();
-          } else {
-            // Create a new competition
-            const newCompetition = new Competition(competitionData);
-            return newCompetition.save();
-          }
-        })
-        .then(() => {
-          req.flash('success', 'Profile and competition information updated successfully');
-          res.redirect('/myprofile');
-        })
-        .catch(error => {
-          req.flash('error', 'Failed to update competition information');
-          next(error);
-        });
-    })
-    .catch(error => next(error));
-});
-  
-  // Route to handle deleting the user profile
-  router.get('/myprofile', isLoggedIn, (req, res, next) => {
-    // Check if the user is logged in
-    if (!req.session.currentUser) {
-      res.redirect('/login');
-      return;
-    }
-  
-    // Retrieve the user's profile from the database
-    User.findById(req.session.currentUser._id)
-      .then(foundUser => {
-        if (!foundUser) {
+      .then(updatedUser => {
+        if (!updatedUser) {
           req.flash('error', 'User not found');
           res.redirect('/login');
           return;
         }
   
-        res.render('users/myprofile', { user: req.body });
+        // Check if a competition already exists for the user
+        Competition.findOne({ user: userId })
+          .then(existingCompetition => {
+            if (existingCompetition) {
+              // Update the existing competition
+              existingCompetition.set(competitionData);
+              return existingCompetition.save();
+            } else {
+              // Create a new competition
+              const newCompetition = new Competition(competitionData);
+              return newCompetition.save();
+            }
+          })
+          .then(() => {
+            req.flash('success', 'Profile and competition information updated successfully');
+            res.redirect('/myprofile');
+          })
+          .catch(error => {
+            req.flash('error', 'Failed to update competition information');
+            next(error);
+          });
       })
       .catch(error => next(error));
   });
+  
+  // // Route to handle deleting the user profile
+  // router.get('/myprofile', isLoggedIn, (req, res, next) => {
+  //   // Check if the user is logged in
+  //   if (!req.session.currentUser) {
+  //     res.redirect('/login');
+  //     return;
+  //   }
+  
+  //   // Retrieve the user's profile from the database
+  //   User.findById(req.session.currentUser._id)
+  //     .then(foundUser => {
+  //       if (!foundUser) {
+  //         req.flash('error', 'User not found');
+  //         res.redirect('/login');
+  //         return;
+  //       }
+  
+  //       res.render('users/myprofile', { user: req.body });
+  //     })
+  //     .catch(error => next(error));
+  // });
   
   // Route to handle form submission and update user profile
   router.post('/myprofile/update', isLoggedIn, (req, res, next) => {

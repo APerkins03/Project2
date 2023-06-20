@@ -25,6 +25,49 @@
     <img src='./images/bbqcomp2.png' alt="Image" class="image-with-border">
     </div>
   
+ 
+<div class="info-container">
+  <div class="info-left">
+
+<h2 class="prize">Prize Money Based on total of $12,000 in Cash &amp; Prize winnings.
+<div>Grand Champion $3,000</div>
+<div>Reserve Champion $2,000</div>
+<div>3rd Overall $1,000</div>
+<div>4th Overall $500</div>
+<div>Entry Deadline is September 15, 2023</div>
+</h2> 
+</div>
+<h1>Find Hotels in the area</h1>
+  <form action="/bbq" method="POST">
+    <label for="location">Location:</label>
+    <input type="text" name="location" id="location" required>
+    <button type="submit">Search Hotels</button>
+  </form>
+
+  {{#if hotelData}}
+  <div class="info-right">
+  <h2 class="hotel">Hotel Results:</h2>
+  <ul>
+    {{#each hotelData}}
+    <li>
+      <h3>{{this.name}}</h3>
+      <p>Address: {{this.address}}</p>
+      <p>City: {{this.city}}</p>
+      <p>State: {{this.state}}</p>
+      <!-- Display other hotel information as needed -->
+    </li>
+    {{/each}}
+  </ul>
+  </div>
+  {{else}}
+  {{#if error}}
+  <p>{{error}}</p>
+  {{else}}
+  <p>No hotels found.</p>
+  {{/if}}
+  {{/if}}
+  </div>
+<hr class="seperator">
   <h1 class="rules"> 
 <div>1. The 2023 Donkeys Big A$$ BBQ Competition is a Florida BBQ Association Sanctioned event</div>
 <div>2. The 2023 Donkeys Big A$$ BBQ Competition is Sanctioned by the Florida BBQ Association</div>
@@ -61,44 +104,10 @@ Please enter early as we expect spots to get filled quickly</div>
 <div>__Chicken Sauce Competition 25.00</div>
 <div>__Pork Sauce Competition 25.00</div>
 
-<hr class="seperator">
 
-<h2 class="prize">Prize Money Based on total of $12,000 in Cash &amp; Prize winnings.
-<div>Grand Champion $3,000</div>
-<div>Reserve Champion $2,000</div>
-<div>3rd Overall $1,000</div>
-<div>4th Overall $500</div>
-<div>Entry Deadline is September 15, 2023</div>
-</h2>
  </h1>
 
-<h1>Find Hotels in the area</h1>
-  <form action="/bbq" method="POST">
-    <label for="location">Location:</label>
-    <input type="text" name="location" id="location" required>
-    <button type="submit">Search Hotels</button>
-  </form>
 
-  {{#if hotelData}}
-  <h2>Hotel Results:</h2>
-  <ul>
-    {{#each hotelData}}
-    <li>
-      <h3>{{this.name}}</h3>
-      <p>Address: {{this.address}}</p>
-      <p>City: {{this.city}}</p>
-      <p>State: {{this.state}}</p>
-      <!-- Display other hotel information as needed -->
-    </li>
-    {{/each}}
-  </ul>
-  {{else}}
-  {{#if error}}
-  <p>{{error}}</p>
-  {{else}}
-  <p>No hotels found.</p>
-  {{/if}}
-  {{/if}}
 </body>
 
 
@@ -171,6 +180,7 @@ Please enter early as we expect spots to get filled quickly</div>
   border-color: rgb(3, 3, 3);
 }
 .rules{
+  padding-top: 100px;
   color: white;
   font-size: medium;
   text-align: left;
@@ -184,8 +194,40 @@ Please enter early as we expect spots to get filled quickly</div>
   }
 
 .prize {
+  text-align: left;
   color: white;
   font-size: x-large;
+}
+
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Updated: Align items to the top */
+  margin-top: 20px;
+  margin-right: 20px; /* Adjust the margin as needed */
+  margin-left: 20px; /* Adjust the margin as needed */
+}
+
+.info-left {
+  text-align: center;
+  width: 45%; /* Adjust the width as desired */
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.info-right {
+  text-align: center;
+  width: 45%; /* Adjust the width as desired */
+  margin-left: 10px; /* Adjust the margin as needed */
+}
+
+.info-right ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px; /* Added: Create space between the list items */
+}
+
+.info-right li {
+  margin-bottom: 20px;
 }
 
 </style>

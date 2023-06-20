@@ -14,18 +14,33 @@
       </li>
       <li id="to-right">
         <a href="/myprofile">My Profile</a> <span> | </span>
-        <a href="/logout">Logout</a> {{!-- !!! --}}
+        <a href="/">Logout</a> {{!-- !!! --}}
       </li>
       </ul>
       </nav>
 
+<div class="image-container">
+    <img src='./images/logo2.jpg' alt="Image" class="bbq">
+    </div>
+<div class="container">
+  <h1 class="title">My Donkey's Competition Page</h1>
 
-<body>
-  <div>
-<h2><a href="/userprofile"> Competition Signup </a></h2>
-</div>
-  <div>
-<h2><a href="/appchanges"> Application Changes </a></h2>
+  <div class="userprofile">
+    <h2><a href="/userprofile">Competition Signup</a></h2>
+  </div>
+  <div class="appchanges">
+    <h2><a href="/appchanges">Application Changes</a></h2>
+  </div>
+  <div class="appchanges">
+    <h2><a href="/photos">My Gallery</a></h2>
+  </div>
+<div class="appchanges">
+  <form action="/photos" method="POST" enctype="multipart/form-data">
+    <label for="photo">Upload Photo:</label>
+  <input type="file" name="photo" id="photo" accept="image/*">
+    <button type="submit" class="appchanges-btn">Upload</button>
+  </form>
+  </div>
 </div>
 </body>
 
@@ -68,9 +83,79 @@
 .navbar ul li#to-right {
       margin-right: auto; 
     }
+      
+.title {
+  padding-top: 80px;
+  padding-bottom: 20px;
+  font-size: 60px;
+  text-align: center;
+  color: #bb2222;
+  margin-top: 50px;
+  border-radius: 50px;
+  text-transform: uppercase;
+}
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
+.userprofile,
+.appchanges {
+  padding: 20px;
+  background-color: #f2f2f2;
+  color: #333333;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.userprofile a,
+.appchanges a {
+  text-decoration: none;
+  color: #333333;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
 
+.userprofile a:hover,
+.appchanges a:hover {
+  color: #d12b2b;
+}
+ 
+.image-container {
+  padding-top: 100px;
+  padding-right: 175px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.image-container img {
+  width: 160%;
+  height: 160%;
+}
+
+.appchanges-btn {
+  background-color: #f2f2f2;
+  color: #333333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.appchanges-btn:hover {
+  background-color: #d12b2b;
+  color: #fff;
+}
 
 </style>
