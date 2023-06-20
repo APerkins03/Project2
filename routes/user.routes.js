@@ -7,46 +7,34 @@ const Competition = require('../models/competition.model.js');
 const axios = require('axios');
 const searchHotels = require('./hotelApi');
 
-
-const mongoose = require("mongoose");
-
-
+const saltRounds = 10;
 
 router.get("/signup", (req, res, next) => {
     res.render("users/signup");
-})
-
+});
 
 router.post("/signup", (req, res, next) => {
-    
-const saltRounds = 10;
+    const username = req.body.username;
+    const password = req.body.password;
+    const email = req.body.email;
 
-const username = req.body.username;
-  const password = req.body.password;
-  const email = req.body.email;
+    if (!username || !password || !email) {
+        req.flash("error", "Please provide all the required information.");
+        res.redirect("/signup");
+        return;
+    }
 
-  if (!username || !password || !email) {
-    // Handle missing fields
-    req.flash("error", "Please provide all the required information.");
-    res.redirect("/signup");
-    return;
-  }
-
-  bcryptjs
-    .genSalt(saltRounds)
-    .then((salt) => bcryptjs.hash(password, salt))
-    .then((hashedPassword) => {
-      // Log the values of password and hashedPassword for debugging
-      console.log("Password:", password);
-      console.log("Hashed Password:", hashedPassword);
-
-      User.create({ username: username, passwordHash: hashedPassword, email: email })
-        .then(() => {
-          res.redirect("/login");
+    bcryptjs
+        .genSalt(saltRounds)
+        .then((salt) => bcryptjs.hash(password, salt))
+        .then((hashedPassword) => {
+            User.create({ username: username, passwordHash: hashedPassword, email: email })
+                .then(() => {
+                    res.redirect("/login");
+                })
+                .catch((error) => next(error));
         })
         .catch((error) => next(error));
-    })
-    .catch((error) => next(error));
 });
 
 router.get("/login", (req, res, next) => {
@@ -56,62 +44,46 @@ router.get("/login", (req, res, next) => {
 router.post("/login", (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
-  
+
     User.findOne({ username: req.body.username })
-      .then(foundUser => {
-        if (!foundUser) {
-          req.flash("error", "Username or password not found");
-          res.redirect("/login");
-          return;
-        } else if (foundUser.passwordHash && bcryptjs.compareSync(password, foundUser.passwordHash)) {
-          if (foundUser.verified) {
-            req.session.currentUser = foundUser;
-            req.flash("success", "Successfully logged in");
-            res.redirect('/myprofile'); // Update the redirection here
-          } else {
-            req.flash("error", "Account is not verified");
-            res.redirect("/login");
-          }
-        } else {
-          req.flash("error", "Password does not match");
-          res.redirect("/login");
-        }
-      })
-      .catch(error => next(error));
-  });
-
-  router.get("/appchanges", (req, res, next) => {
-    res.render("users/appchanges");
-});
-router.get('/appchanges', async (req, res) => {
-  try {
-    // Get the logged-in user ID from the session or authentication data
-    const userId = req.user.id;
-
-    // Fetch the competition data for the logged-in user
-    const competition = await Competition.findOne({ user: userId });
-
-    // Pass the competition data to the template
-    res.render('appchanges', { competition });
-  } catch (error) {
-    // Handle any errors
-    res.render('error', { error });
-  }
+        .then(foundUser => {
+            if (!foundUser) {
+                req.flash("error", "Username or password not found");
+                res.redirect("/login");
+                return;
+            } else if (foundUser.passwordHash && bcryptjs.compareSync(password, foundUser.passwordHash)) {
+                if (foundUser.verified) {
+                    req.session.currentUser = foundUser;
+                    req.flash("success", "Successfully logged in");
+                    res.redirect('/myprofile');
+                } else {
+                    req.flash("error", "Account is not verified");
+                    res.redirect("/login");
+                }
+            } else {
+                req.flash("error", "Password does not match");
+                res.redirect("/login");
+            }
+        })
+        .catch(error => next(error));
 });
 
+router.get("/appchanges", (req, res, next) => {
+  res.render("users/appchanges");
+});
 
-  router.get('/userprofile', (req, res, next) => {
+router.get('/userprofile', (req, res, next) => {
     if (!req.session.currentUser || !req.session.currentUser._id) {
-      req.flash('error', 'User not found');
-      res.redirect('/login');
-      return;
+        req.flash('error', 'User not found');
+        res.redirect('/login');
+        return;
     }
-  
+
     User.findById(req.session.currentUser._id)
-      .then(foundUser => {
-        if (!foundUser) {
-          req.flash('error', 'User not found');
-          res.redirect('/login');
+        .then(foundUser => {
+            if (!foundUser) {
+                req.flash('error', 'User not found');
+                res.redirect('/login');
           return;
         }
         res.render('users/userprofile', { user: foundUser });
@@ -144,13 +116,43 @@ router.get('/appchanges', async (req, res) => {
           res.redirect('/login');
           return;
         }
-  
-        req.flash('success', 'Profile updated successfully');
+
+      // Create a new Competition instance with form data
+      const newCompetition = new Competition({
+        teamName: updatedUser.teamName,
+        headCook: updatedUser.headCook,
+        fbaNum: updatedUser.fbaNum,
+        address: updatedUser.address,
+        city: updatedUser.city,
+        state: updatedUser.state,
+        zip: updatedUser.zip,
+        phone: updatedUser.phone,
+        email: updatedUser.email,
+        user: updatedUser._id // Link the user ID to the competition record
+      });
+
+      // Save the new competition to the database
+      newCompetition.save()
+        .then(() => {
+          req.flash('success', 'Profile and competition information updated successfully');
+          res.redirect('/myprofile');
+        })
+        .catch(error => {
+          req.flash('error', 'Failed to save competition information');
+          next(error); // Pass the error to the error-handling middleware
+        });
+    })
+    .catch(error => next(error)); // Pass the error to the error-handling middleware
+
+     req.flash('success', 'Profile updated successfully');
         // Redirect to the myprofile page, passing the updated user data
-        res.redirect('/myprofile');
+        res.redirect('/myprofile');  
+        
       })
-      .catch(error => next(error));
-  });
+    
+    
+    
+
   
   router.get('/myprofile', isLoggedIn, (req, res, next) => {
     // Check if the user is logged in
@@ -179,24 +181,65 @@ router.get('/appchanges', async (req, res) => {
       res.redirect('/login');
       return;
     }
+
+    const userId = req.session.currentUser._id;
+    const {
+      teamName,
+      headCook,
+      fbaNum,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      email
+    } = req.body;
   
-    User.findByIdAndUpdate(
-      req.session.currentUser._id,
-      req.body,
-      { new: true }
-    )
-      .then(updatedUser => {
-        if (!updatedUser) {
-          req.flash('error', 'User not found');
-          res.redirect('/login');
-          return;
-        }
+    const competitionData = {
+      teamName,
+      headCook,
+      fbaNum,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      email,
+      user: userId
+    };
   
-        req.flash('success', 'Profile updated successfully');
-        res.redirect('/myprofile');
-      })
-      .catch(error => next(error));
-  });
+    User.findByIdAndUpdate(userId, req.body, { new: true })
+    .then(updatedUser => {
+      if (!updatedUser) {
+        req.flash('error', 'User not found');
+        res.redirect('/login');
+        return;
+      }
+
+      // Check if a competition already exists for the user
+      Competition.findOne({ user: userId })
+        .then(existingCompetition => {
+          if (existingCompetition) {
+            // Update the existing competition
+            existingCompetition.set(competitionData);
+            return existingCompetition.save();
+          } else {
+            // Create a new competition
+            const newCompetition = new Competition(competitionData);
+            return newCompetition.save();
+          }
+        })
+        .then(() => {
+          req.flash('success', 'Profile and competition information updated successfully');
+          res.redirect('/myprofile');
+        })
+        .catch(error => {
+          req.flash('error', 'Failed to update competition information');
+          next(error);
+        });
+    })
+    .catch(error => next(error));
+});
   
   // Route to handle deleting the user profile
   router.get('/myprofile', isLoggedIn, (req, res, next) => {
