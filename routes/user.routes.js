@@ -55,30 +55,30 @@ router.get("/login", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
-    const username = req.body.username;
-    const password = req.body.password;
+  const username = req.body.username;
+  const password = req.body.password;
 
-    User.findOne({ username: req.body.username })
-        .then(foundUser => {
-            if (!foundUser) {
-                req.flash("error", "Username or password not found");
-                res.redirect("/login");
-                return;
-            } else if (foundUser.passwordHash && bcryptjs.compareSync(password, foundUser.passwordHash)) {
-                if (foundUser.verified) {
-                    req.session.currentUser = foundUser;
-                    req.flash("success", "Successfully logged in");
-                    res.redirect('/myprofile');
-                } else {
-                    req.flash("error", "Account is not verified");
-                    res.redirect("/login");
-                }
-            } else {
-                req.flash("error", "Password does not match");
-                res.redirect("/login");
-            }
-        })
-        .catch(error => next(error));
+  User.findOne({ username: req.body.username })
+    .then(foundUser => {
+      if (!foundUser) {
+        req.flash("error", "Username or password not found");
+        res.redirect("/login");
+        return;
+      } else if (foundUser.passwordHash && bcryptjs.compareSync(password, foundUser.passwordHash)) {
+        if (foundUser.verified) {
+          req.session.currentUser = foundUser;
+          req.flash("success", "Successfully logged in");
+          res.redirect('/myprofile');
+        } else {
+          req.flash("error", "Account is not verified");
+          res.redirect("/login");
+        }
+      } else {
+        req.flash("error", "Password does not match");
+        res.redirect("/login");
+      }
+    })
+    .catch(error => next(error));
 });
 
 router.get("/appchanges", (req, res, next) => {
@@ -337,6 +337,7 @@ router.get('/userprofile', (req, res, next) => {
       })
       .catch(error => next(error));
   });
+
 
   router.get("/photos", (req, res, next) => {
     res.render("users/photos");

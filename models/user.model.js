@@ -26,8 +26,9 @@ const userSchema = new Schema(
         verified: {
           type: Boolean,
           default: true
-        }
-        // admin: {type: Boolean, default: false}
+        },
+        Admin: {type: Boolean, default: false},
+        active: {type: Boolean, default: false}
       },
       {
         // this second object adds extra properties: `createdAt` and `updatedAt`    

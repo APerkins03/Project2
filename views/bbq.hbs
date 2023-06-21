@@ -18,57 +18,32 @@
       </li>
     </ul>
   </nav>
-  <h1 class="signup"> Please make sure to read our rules and regulations below, and sign-up to submit your application <a href="/signup">here</a>  on our website! </h1>
+<h1 class="signup"> Please make sure to read our rules and regulations below, and sign-up to submit your application <a href="/signup">here</a>  on our website! </h1>
 
-  <div class="background-container">
-    
-    <img src='./images/bbqcomp2.png' alt="Image" class="image-with-border">
-    </div>
-  
- 
-<div class="info-container">
-  <div class="info-left">
+  <div class="background-container">
+    
+    <img src='./images/bbqcomp2.png' alt="Image" class="image-with-border">
+    </div>
+  
+ <section id="prizes">
+  <div class="info-container">
+    <div class="info-left">
+      <h2 class="prize">Prize Money Based on total of $12,000 in Cash &amp; Prize winnings.</h2> 
+      <ul>
+        <li>Grand Champion $3,000</li>
+        <li>Reserve Champion $2,000</li>
+        <li>3rd Overall $1,000</li>
+        <li>4th Overall $500</li>
+        <li>Entry Deadline is September 15, 2023</li>
+      </ul>
+      
+    </div>
+  </div>
+ </section>
 
-<h2 class="prize">Prize Money Based on total of $12,000 in Cash &amp; Prize winnings.
-<div>Grand Champion $3,000</div>
-<div>Reserve Champion $2,000</div>
-<div>3rd Overall $1,000</div>
-<div>4th Overall $500</div>
-<div>Entry Deadline is September 15, 2023</div>
-</h2> 
-</div>
-<h1>Find other attractions and hotels in the area</h1>
-  <form action="/bbq" method="POST">
-    <label for="location">Location:</label>
-    <input type="text" name="location" id="location" required>
-    <button type="submit">Search Attractions</button>
-  </form>
-
-  {{#if hotelData}}
-  <div class="info-right">
-  <h2 class="hotel">Hotel and Attraction Results:</h2>
-  <ul>
-    {{#each hotelData}}
-    <li>
-      <h3>{{this.name}}</h3>
-      <p>Address: {{this.address}}</p>
-      <p>City: {{this.city}}</p>
-      <p>State: {{this.state}}</p>
-      <!-- Display other hotel information as needed -->
-    </li>
-    {{/each}}
-  </ul>
-  </div>
-  {{else}}
-  {{#if error}}
-  <p>{{error}}</p>
-  {{else}}
-  <p>No hotels found.</p>
-  {{/if}}
-  {{/if}}
-  </div>
 <hr class="seperator">
-  <h1 class="rules"> 
+<section>
+    <h1 class="rules"> 
 <div>1. The 2023 Donkeys Big A$$ BBQ Competition is a Florida BBQ Association Sanctioned event</div>
 <div>2. The 2023 Donkeys Big A$$ BBQ Competition is Sanctioned by the Florida BBQ Association</div>
 <div>3. Arrival/Set Up begins on Thursday, September 28, 2023 at 12pm.</div>
@@ -105,130 +80,185 @@ Please enter early as we expect spots to get filled quickly</div>
 <div>__Pork Sauce Competition 25.00</div>
 
 
- </h1>
+</h1>
+</section>
 
-
+<hr>
+<section>
+ <h1>Find other attractions and hotels in the area</h1>
+ <form action="/bbq" method="POST">
+ <label for="location">Location:</label>
+ <input type="text" name="location" id="location" required>
+ <button type="submit">Search Attractions</button>
+ </form>
+{{#if hotelData}}
+ <div class="info-right">
+ <h2 class="hotel">Hotel and Attraction Results:</h2>
+ <ul>
+ {{#each hotelData}}
+ <li>
+ <h3>{{this.name}}</h3>
+ <p>Address: {{this.address}}</p>
+ <p>City: {{this.city}}</p>
+ <p>State: {{this.state}}</p>
+ <!-- Display other hotel information as needed -->
+ </li>
+{{/each}}
+ </ul>
+ </div>
+ {{else}}
+ {{#if error}}
+ <p>{{error}}</p>
+ {{else}}
+ <p>No hotels found.</p>
+ {{/if}}
+ {{/if}}
+</section>
 </body>
-
-
-
-
 <style>
 .navbar {
-      font-size: medium;
-      background-color: #333;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-       position: fixed; /* Added: Position fixed to keep it at the top */
-      top: 0; /* Added: Align it to the top */
-     left: 0; /* Added: Align it to the left */
-    z-index: 999;
+ font-size: medium;
+ background-color: #333;
+ width: 100%;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+position: fixed; /* Added: Position fixed to keep it at the top */
+ top: 0; /* Added: Align it to the top */
+left: 0; /* Added: Align it to the left */
+ z-index: 999;
 }
 .navbar ul {
-      list-style-type: none;
-      margin: 0;
-      padding-top: 20px;
-      display: flex;
-      justify-content: space-between; /* Add this line */
-      width: 100%; /* Add this line */
-    }
+list-style-type: none;
+ margin: 0;
+ padding-top: 20px;
+ display: flex;
+ justify-content: space-between; /* Add this line */
+ width: 100%; /* Add this line */
+ }
 
 .navbar ul li {
-      margin: 0 10px;
-      flex: 1; /* Add this line */
-      text-align: center;
-      color: red;
-    }
+ margin: 0 10px;
+ flex: 1; /* Add this line */
+ text-align: center;
+ color: red;
+ }
 
 .navbar ul li a {
-      color: #fff;
-      text-decoration: none;
-    }
+ color: #fff;
+ text-decoration: none;
+ }
 
 .navbar ul li#to-right {
-      margin-right: auto; /* Add this line */
-    }
+ margin-right: auto; /* Add this line */
+ }
 
 .signup {
-  padding-top: 50px;
-    color: white;
-    font-size: x-large;
-    text-align: center;
-    text-decoration: double  ;
+ padding-top: 50px;
+ color: white;
+ font-size: x-large;
+ text-align: center;
+ text-decoration: double  ;
 }
 
 .background-container {
-      
-      background-size: auto;
-      background-position: center;
-      background-repeat: no-repeat;
-      width: 100%;
-      height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 60px;
-      margin-bottom: 20px; /* Add margin-bottom to create space */
-      margin-right: 20px;
-      margin-left: 20px;
-    }
+ 
+ background-size: auto;
+ background-position: center;
+ background-repeat: no-repeat;
+ width: 100%;
+ height: 80vh;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin-top: 60px;
+ margin-bottom: 20px; /* Add margin-bottom to create space */
+ margin-right: 20px;
+ margin-left: 20px;
+ }
 .image-with-border {
-  border-width: 4px; /* Adjust the border-width value as needed */
-  border-style: solid;
-  border-color: rgb(3, 3, 3);
+ border-width: 4px; /* Adjust the border-width value as needed */
+ border-style: solid;
+ border-color: rgb(3, 3, 3);
 }
+
+
+/* Prizes */
+#prizes {
+ text-align: center;
+ padding-bottom: 20px;
+ padding-top: 10px;
+ font-size: 1.5em;
+
+ justify-content: center;
+}
+
+#prizes ul {
+ text-align: center;
+ padding-bottom: 10px;
+ font-size: 1.5em;
+ justify-content: center;
+ list-style-type:none;
+ padding-left: 0;
+}
+#prizes ul li {
+ text-align: left;
+}
+
+
+
+
 .rules{
-  padding-top: 100px;
-  color: white;
-  font-size: medium;
-  text-align: left;
+ padding-top: 100px;
+ color: white;
+ font-size: medium;
+ text-align: left;
 
 }
 
- .separator {
-    border: white;
-    border-top: 20px solid #ffffff;
-    margin: 20px 0;
-  }
+.separator {
+ border: white;
+ border-top: 20px solid #ffffff;
+ margin: 20px 0;
+ }
 
 .prize {
-  text-align: left;
-  color: white;
-  font-size: x-large;
+ text-align: left;
+ color: white;
+ font-size: x-large;
 }
 
 .info-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start; /* Updated: Align items to the top */
-  margin-top: 20px;
-  margin-right: 20px; /* Adjust the margin as needed */
-  margin-left: 20px; /* Adjust the margin as needed */
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-start; /* Updated: Align items to the top */
+ margin-top: 20px;
+ margin-right: 20px; /* Adjust the margin as needed */
+ margin-left: 20px; /* Adjust the margin as needed */
 }
 
 .info-left {
-  text-align: center;
-  width: 45%; /* Adjust the width as desired */
-  margin-right: 10px; /* Adjust the margin as needed */
+ text-align: center;
+ width: 45%; /* Adjust the width as desired */
+ margin-right: 10px; /* Adjust the margin as needed */
 }
 
 .info-right {
-  text-align: center;
-  width: 45%; /* Adjust the width as desired */
-  margin-left: 10px; /* Adjust the margin as needed */
+ text-align: center;
+ width: 45%; /* Adjust the width as desired */
+ margin-left: 10px; /* Adjust the margin as needed */
 }
 
 .info-right ul {
-  list-style-type: none;
-  padding: 0;
-  margin-top: 10px; /* Added: Create space between the list items */
+ list-style-type: none;
+ padding: 0;
+ margin-top: 10px; /* Added: Create space between the list items */
 }
 
 .info-right li {
-  margin-bottom: 20px;
+ margin-bottom: 20px;
 }
 
 </style>
+
 
