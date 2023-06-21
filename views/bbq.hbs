@@ -37,16 +37,16 @@
 <div>Entry Deadline is September 15, 2023</div>
 </h2> 
 </div>
-<h1>Find Hotels in the area</h1>
+<h1>Find other attractions and hotels in the area</h1>
   <form action="/bbq" method="POST">
     <label for="location">Location:</label>
     <input type="text" name="location" id="location" required>
-    <button type="submit">Search Hotels</button>
+    <button type="submit">Search Attractions</button>
   </form>
 
   {{#if hotelData}}
   <div class="info-right">
-  <h2 class="hotel">Hotel Results:</h2>
+  <h2 class="hotel">Hotel and Attraction Results:</h2>
   <ul>
     {{#each hotelData}}
     <li>

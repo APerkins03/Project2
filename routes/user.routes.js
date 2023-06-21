@@ -395,7 +395,7 @@ router.get('/userprofile', (req, res, next) => {
       res.render('hotel', { hotelData: hotelData });
     } catch (error) {
       console.error(error);
-      res.render('bbq', { error: 'Failed to fetch hotel data' });
+      res.render('error', { error: 'Failed to fetch attraction data' });
     }
   });
   

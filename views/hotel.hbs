@@ -1,5 +1,4 @@
 <head>
-  <title>Hotel Results</title>
 </head>
 <body>
   <h1>Search Results</h1>
@@ -7,12 +6,68 @@
   {{#if error}}
     <p>{{error}}</p>
   {{else}}
-    <ul>
+    <ul class="hotel-list">
       {{#each hotelData}}
-        <li>{{name}}</li>
-        <!-- Add additional hotel data fields you want to display -->
+        <li class="hotel-item">
+          <div class="hotel-name">{{this.name}}</div>
+          <div class="hotel-city">{{this.city_name}}</div>
+          <div class="hotel-region">{{this.region}}</div>
+            <div class="hotel-url">
+    <a href="{{this.image_url}}" target="_blank">View Image</a>
+  </div>
+        </li>
       {{/each}}
     </ul>
   {{/if}}
 </body>
 </html>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    color: #666;
+    margin-top: 40px;
+  }
+
+  .hotel-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+
+  .hotel-item {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px; /* Adjusted padding */
+    margin-bottom: 5px; /* Adjusted margin */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .hotel-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .hotel-city {
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .hotel-region {
+    color: #999;
+  }
+</style>
