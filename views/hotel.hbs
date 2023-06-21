@@ -1,0 +1,18 @@
+<head>
+  <title>Hotel Results</title>
+</head>
+<body>
+  <h1>Search Results</h1>
+
+  {{#if error}}
+    <p>{{error}}</p>
+  {{else}}
+    <ul>
+      {{#each hotelData}}
+        <li>{{name}}</li>
+        <!-- Add additional hotel data fields you want to display -->
+      {{/each}}
+    </ul>
+  {{/if}}
+</body>
+</html>

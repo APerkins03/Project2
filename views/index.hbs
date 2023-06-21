@@ -1,134 +1,353 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-  
-  <nav class="navbar">
-    <ul>
-      <li id="to-left">
-        <p><a href="/menu"> Menu </a></p>
-        </li>
-        <li>
-        <p><a href="/bbq"> BBQ Competition </a></p>
-      </li>
-    <li>
-        <p><a href="/aboutus"> About Us </a></p>
-      </li>
-      <li>
-        <p><a href="/events"> Events </a></p>
-      </li>
-      <li id="to-right">
-        <a href="/signup">Signup</a> <span> | </span>
-        <a href="/login">Login</a> {{!-- !!! --}}
-      </li>
-    </ul>
-  </nav>
-  <div>
-  <div class="specials-container">
-    <h1>
-      Daily Specials
-    </h1>
-  </div>
-  <div class="events-container">
-    <h1>
-      Upcoming Events
-    </h1>
-  </div>
-  </div>
-  <div class="background-container">
-    <h1></h1>
-    <img src='./images/Donkeyslogo2023.JPG' alt="Image" class="image-with-outline">
-    </div>
+ 
+ <nav class="navbar">
+ <ul>
+ <li id="to-left">
+ <p><a href="/menu"> Menu </a></p>
+ </li>
+ <li>
+ <p><a href="/bbq"> BBQ Competition </a></p>
+ </li>
+ <li>
+ <p><a href="/aboutus"> About Us </a></p>
+</li>
+ <li>
+ <p><a href="/events"> Events </a></p>
+ </li>
+ <li id="to-right">
+ <a href="/signup">Signup</a> <span> | </span>
+ <a href="/login">Login</a> {{!-- !!! --}}
+ </li>
+ </ul>
+</nav>
 
-   <style>
-    body {
-      background-color: #4e4c4c; /* Replace with your desired color value */
-       
-    }
+<section>
+ <div class="background-container">
+ <h1></h1>
+ <img src='./images/Donkeyslogo2023.JPG' alt="Image" class="image-with-outline">
+ </div>
+</section>
 
-     .navbar {
-      font-size: medium;
-      background-color: #333;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-       position: fixed; /* Added: Position fixed to keep it at the top */
-      top: 0; /* Added: Align it to the top */
-     left: 0; /* Added: Align it to the left */
-    z-index: 999;
-      
-    }
+<hr>
+
+<section id="specials">
+<div class="specials-container">
+ <h2>
+ Daily Specials
+ </h2>
+ <ul>
+ <li>Fried Grouper</li>
+ <li>Pulled Pork Sam'itch</li>
+ <li>Fat Slab'O Ribs</li>
+ </ul>
+</div>
+</section>
+
+<hr>
+
+
+
+<!--Hours and Location-->
+<section id="hoursLocation">
+ <h2>Hours and Location</h2>
+ </section>
+<section id="hours-location">
+ <article class="container-hours">
+ <h3>Donkeys Bar & Grill</h3>
+ <address> 
+ 2481 Crawfordville Hwy,<br>
+ Crawfordville, FL 
+ 32327<br>
+</address>
+ </article>
+ <article class="container-hours">
+ <aside>
+ <h3>Hours</h3>
+ <h4>Monday-Sunday</h4>
+ <h5>11:30 am – 10:00 pm</h5>
+ </aside>
+</article>
+</section>
+<hr>
+
+
+
+<!--Events-->
+<section id="events">
+<h2>Events</h2>
+ <p>Join Us For Live Music!</p>
+ <table>
+ <tr>
+ <td class="day">Friday</td>
+ <td class="date">Oct 1</td>
+<td class="band">The Blues Brothers</td>
+ <td class="time">8:00 PM - 11:00 PM</td>
+ </tr>
+ <tr>
+ <td class="day">Friday</td>
+ <td class="date">Oct 8</td>
+ <td class="band">The Rolling Stones</td>
+ <td class="time">9:00 PM - 12:00 AM</td>
+ </tr>
+ <tr>
+ <td class="day">Friday</td>
+ <td class="date">Oct 15</td>
+ <td class="band">The Beatles</td>
+ <td class="time">8:30 PM - 11:30 PM</td>
+ </tr>
+</table>
+</section>
+
+
+<hr>
+
+
+
+<!-- Contact-->
+<section id="contact">
+ <h2>Contact</h2>
+ <p>We don't care what you have to say, but if you must, Please contact us by email at: <a href="mailto:head-donkey@donkeysbarandgrill.com">Head-Donkey@donkeysbarandgrill.com</a></p>
+ <p>If you rather complain live-action, plase call us at 850-321-1234</p>
+</section>
+
+
+<!--Footer-->
+<footer class="foot">
+<section id="foot">
+<article class="foot-contain">
+ <h3>Follow Us!</h3>
+ <ul>
+ <li><a href="#">Facebook</a></li>
+ <li><a href="#">Instagram</a></li>
+ </ul>
+ </article>
+<article class="foot-contain">
+ <p>Copyright 2023 Website by APerkins</p>
+ </article>
+ </section>
+</footer>
+<style>
+ body {
+ background-color: #4e4c4c; /* Replace with your desired color value */
+ }
+
+.navbar {
+ font-size: medium;
+ background-color: #333;
+ width: 100%;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+position: fixed; /* Added: Position fixed to keep it at the top */
+ top: 0; /* Added: Align it to the top */
+left: 0; /* Added: Align it to the left */
+ z-index: 999;
+ 
+ }
 .navbar ul {
-      list-style-type: none;
-      margin: 0;
-      padding-top: 20px;
-      display: flex;
-      justify-content: space-between; /* Add this line */
-      width: 100%; /* Add this line */
-      
-    }
+ list-style-type: none;
+ margin: 0;
+ padding-top: 20px;
+ display: flex;
+ justify-content: space-between; /* Add this line */
+ width: 100%; /* Add this line */
+ 
+ }
 
-    .navbar ul li {
-      margin: 0 10px;
-      flex: 1; /* Add this line */
-      text-align: center;
-      color: red;
-      
-    }
+ .navbar ul li {
+ margin: 0 10px;
+ flex: 1; /* Add this line */
+ text-align: center;
+ color: red;
+ 
+ }
 
-    .navbar ul li a {
-      color: #fff;
-      text-decoration: none;
-    }
+ .navbar ul li a {
+ color: #fff;
+ text-decoration: none;
+ }
 
-    .navbar ul li#to-right {
-      margin-right: auto; /* Add this line */
-    }
+.navbar ul li#to-right {
+ margin-right: auto; /* Add this line */
+ }
+ hr{
+ border: 1px solid red;
+ }
 
 
-    .background-container {
-      /* background-image: url('./images/Donkeyslogo2023.JPG'); /* Replace with the path to your image */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+ .background-container {
+ /* background-image: url('./images/Donkeyslogo2023.JPG'); /* Replace with the path to your image */
+ background-size: cover;
+ background-position: center;
+ background-repeat: no-repeat;
+width: 100%;
+ height: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ padding: 20px;
+ margin-top: 30px;
+ }
 
-    .image-with-outline {
-      border: 2px solid red;
-    }
+ .image-with-outline {
+ border: 2px solid red;
+ }
 
-  .container {
-  display: flex;
-  justify-content:space-evenly;
+ .container {
+ display: flex;
+ justify-content:center;
 }
 
-.specials-container {
-  width: 20%;
-  padding: 20px;
-  background-color: #ffffff;
-  color: #333333;
-  text-align: center;
-  margin-top: 50px;
+
+/* hoursLocation */
+
+#hours-location {
+display: flex;
+ justify-content: space-evenly;
+ font-size: 1.5em;
+ text-align: center;
+ }
+
+ #hours-location  .container-hours {
+display: flex;
+flex-direction: column;
+ align-items: center;
+ width: 370px;
+ }
+
+#hours-location h2{
+text-align: center;
 }
 
-.events-container {
-  width: 20%;
-  padding: 20px;
-  background-color: #ffffff;
-  color: #333333;
-  text-align: center;
-  margin-top: 50px;
-  align-content: right;
+/* Specials */
+
+#specials {
+ text-align: center;
+ padding-bottom: 50px;
+ font-size: 1.5em;
+ display: flex;
+ justify-content: center;
 }
-  </style>
+
+#specials ul {
+ text-align: center;
+ padding-bottom: 50px;
+ font-size: 1.5em;
+ justify-content: center;
+ list-style-type:circle;
+ padding-left: 0;
+}
+#specials ul li {
+ text-align: center;
+}
+
+
+
+
+/*EVENTS*/
+
+#events {
+ text-align: center;
+ font-size: 1em;
+ padding-bottom: 20px;
+ }
+
+ #events p {
+ text-align: center;
+ font-size: 2em;
+ padding-bottom: 10px;
+ padding-top: 0;
+ }
+ 
+ h2 {
+ font-size: 5em;
+ font-family: cursive;
+ text-align: center;
+ }
+ 
+ table {
+ margin: auto;
+ border-collapse: collapse;
+ }
+ 
+ td {
+ padding: 10px;
+
+ }
+ 
+ .date, .day {
+font-size: 24px;
+ font-weight: bold;
+font-family: cursive;
+}
+ 
+ .band {
+ font-size: 20px;
+ font-weight: bold;
+ font-family: cursive;
+ }
+ 
+ .time {
+ font-size: 16px;
+ font-family: cursive;
+ }
+
+ td:not(:last-child) {
+ padding-right: 100px;
+ }
+
+
+ /* contact */
+
+#contact {
+ text-align: center;
+ padding-bottom: 50px;
+ font-size: 1.5em;
+
+}
+
+#contact a {
+ text-align: center;
+ padding-bottom: 50px;
+ font-size: 1.5em;
+ color: rgb(67, 163, 230);
+}
+
+
+/*FOOTER*/
+
+ #foot {
+ background-color: #333;
+ color: azure;
+ font-size: 1em;
+ padding-top: 0px;
+ padding-bottom: 0x;
+ padding-right: 100px;
+ padding-left: 100px;
+ margin-bottom: 0px;
+ text-align: center;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-top: 0px;
+ width: 100%;
+ 
+ }
+ .foot a {
+ color: rgb(67, 163, 230);
+ }
+
+ #foot .foot-contain {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ }
+ </style>
 </head>
 <body>
-    
-  <!-- Rest of your HTML content -->
+ 
+ <!-- Rest of your HTML content -->
 </body>
 </html>

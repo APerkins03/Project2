@@ -53,7 +53,7 @@ app.set('trust proxy', 1);
         maxAge: 60000
       }, // ADDED code below !!!
       store: MongoStore.create({
-        mongoUrl: 'mongodb://127.0.0.1:27017/Project2'
+        mongoUrl: process.env.MONGODB_URI
       })
     })
   );

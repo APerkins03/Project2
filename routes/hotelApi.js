@@ -4,25 +4,23 @@ require('dotenv').config();
 const searchHotels = async (location) => {
   const options = {
     method: 'GET',
-    url: 'https://hotels4.p.rapidapi.com/locations/search',
+    url: 'https://booking-com.p.rapidapi.com/v1/hotels/locations',
     params: {
-      query: location,
-      locale: 'en_US',
+      name: location,
+      locale: 'en-gb'
     },
     headers: {
-      'x-rapidapi-key': process.env.RAPIDAPI_KEY,
-      'x-rapidapi-host': process.env.RAPIDAPI_HOST,
-    },
+      'X-RapidAPI-Key': process.env.X-RAPIDAPI-KEY,
+      'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
+    }
   };
-
+  
   try {
     const response = await axios.request(options);
-    console.log(response.data); // Add this line to check the API response
-    return response.data;
+    console.log(response.data);
+    return(response.data);
   } catch (error) {
     console.error(error);
-    throw new Error('Failed to fetch hotel data');
   }
-};
-
+}
 module.exports = searchHotels;

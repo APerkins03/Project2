@@ -392,7 +392,7 @@ router.get('/userprofile', (req, res, next) => {
       const location = req.body.location;
       const hotelData = await searchHotels(location);
   
-      res.render('bbq', { hotelData: hotelData.results });
+      res.render('hotel', { hotelData: hotelData });
     } catch (error) {
       console.error(error);
       res.render('bbq', { error: 'Failed to fetch hotel data' });
