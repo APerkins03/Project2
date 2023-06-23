@@ -27,26 +27,17 @@
 
 <div class="container">
   <h1 class="title">My Donkey's Competition Page</h1>
-<p>User ID: {{user._id}}</p>
-  <div class="userprofile">
-    <h2><a href="/userprofile/{{currentUser._id}}">Competition Signup</a></h2>
-  </div>
+<p class="username">Welcome {{user.username}}</p>
+  
 
-  <div class="events">
-    <h2><a href="/events">Events</a></h2>
-  </div>
-
-  <div class="registeredevents">
-    <h2><a href="/registeredevents">Registered Events</a></h2>
-  </div>
-
-  <div class="eventchanges">
-    <h2><a href="/eventchanges">Event Changes</a></h2>
+  <div class="appchanges">
+    <h2><a href="/events">Competition signup</a></h2>
   </div>
 
   <div class="appchanges">
-    <h2><a href="/appchanges/{{competitions._id}}">Application Changes</a></h2>
+    <h2><a href="/registeredevents">Registered Competition</a></h2>
   </div>
+
 
   <div class="appchanges">
     <h2><a href="/photos">My Gallery</a></h2>
@@ -175,4 +166,10 @@
   color: #fff;
 }
 
+.username {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20px;
+}
 </style>

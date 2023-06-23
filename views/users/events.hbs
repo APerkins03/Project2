@@ -1,27 +1,149 @@
-<p>User ID: {{user._id}}</p>
-<h1>Events</h1>
+<nav class="navbar">
+  <ul>
+    <li>
+      <p><a href="/"> Home </a></p>
+    </li>
+    <li id="to-left">
+      <p><a href="/menu"> Menu </a></p>
+    </li>
+    <li>
+      <p><a href="/aboutus"> About Us </a></p>
+    </li>
+    <li id="to-right">
+      <a href="/myprofile">My Profile</a> <span> | </span>
+      <a href="/">Logout</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="username">Welcome {{user.username}}</div>
 
 <!-- Event Form -->
-<form action="/events" method="POST">
+<form action="/events" method="POST" class="form-container">
   <div>
-    <label for="bandname">Band Name:</label>
-    <input type="text" id="bandname" name="bandname" required>
+    <h1>Competition Signup</h1>
+    <div class="form-group">
+      <label for="bandname">Team Name:</label>
+      <input type="text" id="bandname" name="bandname" required>
+    </div>
+    <div class="form-group">
+      <label for="singer">Head Cook:</label>
+      <input type="text" id="singer" name="singer" required>
+    </div>
+    <div class="form-group">
+      <label for="licensenumber">FBA Number:</label>
+      <input type="text" id="licensenumber" name="licensenumber" required>
+    </div>
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <button type="submit">Submit</button>
   </div>
-  <div>
-    <label for="singer">Singer:</label>
-    <input type="text" id="singer" name="singer" required>
-  </div>
-  <div>
-    <label for="licensenumber">License Number:</label>
-    <input type="text" id="licensenumber" name="licensenumber" required>
-  </div>
-  <div>
-    <label for="address">Address:</label>
-    <input type="text" id="address" name="address" required>
-  </div>
-  <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-  </div>
-  <button type="submit">Submit</button>
 </form>
+
+
+
+<style>
+.navbar {
+  font-size: medium;
+  background-color: #333;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0;
+  position: fixed; 
+  top: 0; 
+  z-index: 999;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between; 
+  width: 100%; 
+}
+
+.navbar ul li {
+  margin: 0 10px;
+  flex: 1; 
+  text-align: center;
+  color: red;
+}
+
+.navbar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar ul li#to-right {
+  margin-right: auto; 
+}
+
+.username {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-container {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
+}
+
+.form-container h1 {
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.username {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20px;
+  text-align: center;
+  margin-top: 100px;
+}
+</style>

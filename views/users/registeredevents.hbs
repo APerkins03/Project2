@@ -1,50 +1,88 @@
+<!DOCTYPE html>
 <html>
+
 <head>
   <title>Registered Events</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <p>User ID: {{userId}}</p>
-  <h1>Registered Events</h1>
-  
-  {{#if events.length}}
+  <nav class="navbar">
+    <ul>
+      <li>
+        <p><a href="/">Home</a></p>
+      </li>
+      <li id="to-left">
+        <p><a href="/menu">Menu</a></p>
+      </li>
+      <li>
+        <p><a href="/aboutus">About Us</a></p>
+      </li>
+      <li>
+        <p><a href="/events">Events</a></p>
+      </li>
+      <li id="to-right">
+        <a href="/myprofile">My Profile</a> <span> | </span>
+        <a href="/">Logout</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <p class="username">Welcome {{user.username}}</p>
+    <h1>Registered Events</h1>
+
+    {{#if events.length}}
     {{#each events}}
-      <div>
-        <h2>{{bandname}}</h2>
-        <p>Singer: {{singer}}</p>
-        <p>License Number: {{licensenumber}}</p>
-        <p>Address: {{address}}</p>
-        <p>Email: {{email}}</p>
-      </div>
-      <div>
-  <form id="updateForm">
-    <input type="hidden" name="_method" value="PUT">
+    <div class="event">
+      <h2>Team Name: {{bandname}}</h2>
+      <p>Head Cook: {{singer}}</p>
+      <p>FBA Number: {{licensenumber}}</p>
+      <p>Address: {{address}}</p>
+      <p>Email: {{email}}</p>
+    </div>
+    <div class="form-container">
+      <form id="updateForm">
+        <input type="hidden" name="_method" value="PUT">
 
-    <label for="bandname">Band Name:</label>
-    <input type="text" id="bandname" name="bandname" value="{{this.bandname}}" required>
+        <div class="form-group">
+          <label for="bandname">Team Name:</label>
+          <input type="text" id="bandname" name="bandname" value="{{this.bandname}}" required>
+        </div>
 
-    <label for="singer">Singer:</label>
-    <input type="text" id="singer" name="singer" value="{{this.singer}}" required>
+        <div class="form-group">
+          <label for="singer">Head Cook:</label>
+          <input type="text" id="singer" name="singer" value="{{this.singer}}" required>
+        </div>
 
-    <label for="licensenumber">License Number:</label>
-    <input type="text" id="licensenumber" name="licensenumber" value="{{this.licensenumber}}" required>
+        <div class="form-group">
+          <label for="licensenumber">FBA Number:</label>
+          <input type="text" id="licensenumber" name="licensenumber" value="{{this.licensenumber}}" required>
+        </div>
 
-    <label for="address">Address:</label>
-    <input type="text" id="address" name="address" value="{{this.address}}" required>
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input type="text" id="address" name="address" value="{{this.address}}" required>
+        </div>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{this.email}}" required>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" value="{{this.email}}" required>
+        </div>
 
-    <button type="submit" onclick="updateEvent('{{this._id}}')">Update Event</button>
-    <button type="button" onclick="deleteEvent('{{this._id}}')">Delete Event</button>
-  </form>
-</div>
+        <button type="submit" onclick="updateEvent('{{this._id}}')">Update Event</button>
+         <button type="button" onclick="deleteEvent('{{this._id}}')">Delete Event</button>
+      </form>
+    </div>
     {{/each}}
-  {{else}}
+    {{else}}
     <p>No events found.</p>
-  {{/if}}
-<script src="./events.routes.js"></script>
-<script>
-  function updateEvent(eventId) {
+    {{/if}}
+  </div>
+
+  <script src="./events.routes.js"></script>
+  <script>
+     function updateEvent(eventId) {
   var updatedEventData = {
     bandname: document.getElementById('bandname').value,
     singer: document.getElementById('singer').value,
@@ -98,5 +136,149 @@
         alert('An error occurred while deleting the event');
       });
   }
-</script>
+  </script>
 </body>
+
+</html>
+
+<style>
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.navbar {
+  font-size: 16px;
+  background-color: #333;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar ul li {
+  margin: 0 10px;
+  flex: 1;
+  text-align: center;
+  color: #fff;
+}
+
+.navbar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar ul li#to-right {
+  margin-right: 20px;
+}
+
+.container {
+  margin-top: 80px;
+  padding: 20px;
+}
+
+.username {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.event {
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.form-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  text-align: left;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+}
+
+button[type="submit"],
+button[type="button"] {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+button[type="button"] {
+  background-color: #f44336;
+  color: #fff;
+}
+
+button[type="button"]:hover {
+  background-color: #d32f2f;
+}
+
+p {
+  margin-bottom: 10px;
+  text-align: center;
+}
+</style>
