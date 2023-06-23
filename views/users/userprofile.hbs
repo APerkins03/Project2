@@ -1,4 +1,4 @@
-  <nav class="navbar">
+<nav class="navbar">
     <ul>
      <li>
         <p><a href="/"> Home </a></p>
@@ -25,39 +25,39 @@
     <form action="/userprofile/update" method="POST">
       <div>
         <label for="teamName">Team Name:</label>
-        <input type="text" name="teamName" id="teamName" value="{{user.teamName}}">
+        <input type="text" name="teamName" id="teamName" value="{{competition.teamName}}">
       </div>
       <div>
         <label for="headCook">Head Cook:</label>
-        <input type="text" name="headCook" id="headCook" value="{{user.headCook}}">
+        <input type="text" name="headCook" id="headCook" value="{{competition.headCook}}">
       </div>
       <div>
         <label for="fbaNum">HC FBA Member #:</label>
-        <input type="number" name="fbaNum" id="fbaNum" value="{{user.fbaNum}}">
+        <input type="number" name="fbaNum" id="fbaNum" value="{{competition.fbaNum}}">
       </div>
       <div>
         <label for="address">Address:</label>
-        <input type="text" name="address" id="address" value="{{user.address}}">
+        <input type="text" name="address" id="address" value="{{competition.address}}">
       </div>
       <div>
         <label for="city">City:</label>
-        <input type="text" name="city" id="city" value="{{user.city}}">
+        <input type="text" name="city" id="city" value="{{competition.city}}">
       </div>
       <div>
         <label for="state">State:</label>
-        <input type="text" name="state" id="state" value="{{user.state}}">
+        <input type="text" name="state" id="state" value="{{competition.state}}">
       </div>
       <div>
         <label for="zip">Zip Code:</label>
-        <input type="number" name="zip" id="zip" value="{{user.zip}}">
+        <input type="number" name="zip" id="zip" value="{{competition.zip}}">
       </div>
       <div>
         <label for="phone">Phone Number:</label>
-        <input type="number" name="phone" id="phone" value="{{user.phone}}">
+        <input type="number" name="phone" id="phone" value="{{competition.phone}}">
       </div>
       <div>
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="{{user.email}}">
+        <input type="email" name="email" id="email" value="{{competition.email}}">
       </div>
       <button type="submit">Submit</button>
     </form>

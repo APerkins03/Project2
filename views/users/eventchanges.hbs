@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title>Registered Events</title>
+</head>
+<body>
+  <p>User ID: {{user._id}}</p>
+  <h1>Registered Events</h1>
+  
+  {{#if events.length}}
+    {{#each events}}
+      <div>
+        <h2>{{bandname}}</h2>
+        <p>Singer: {{singer}}</p>
+        <p>License Number: {{licensenumber}}</p>
+        <p>Address: {{address}}</p>
+        <p>Email: {{email}}</p>
+       {{!-- {{#if user}}
+          <p>User ID: {{user._id}}</p>
+        {{else}}
+          <p>User ID: Not available</p>
+        {{/if}} --}}
+      </div>
+    {{/each}}
+  {{else}}
+    <p>No events found.</p>
+  {{/if}}
+</body>
+</html>

@@ -1,4 +1,4 @@
-  <nav class="navbar">
+<nav class="navbar">
     <ul>
      <li>
         <p><a href="/"> Home </a></p>
@@ -13,7 +13,7 @@
         <p><a href="/events"> Events </a></p>
       </li>
       <li id="to-right">
-        <a href="/myprofile/{{user._id}}">My Profile</a> <span> | </span>
+        <a href="/myprofile">My Profile</a> <span> | </span>
         <a href="/">Logout</a> {{!-- !!! --}}
       </li>
       </ul>
@@ -23,57 +23,57 @@
 <body>
     <div class="info-section">
       <h2>Current Information</h2>
-      <ul>
-        <li><strong>Team Name:</strong> {{user.teamName}}</li>
-        <li><strong>Head Cook:</strong> {{user.headCook}}</li>
-        <li><strong>HC FBA Member #:</strong> {{user.fbaNum}}</li>
-        <li><strong>Address:</strong> {{user.address}}</li>
-        <li><strong>City:</strong> {{user.city}}</li>
-        <li><strong>State:</strong> {{user.state}}</li>
-        <li><strong>Zip Code:</strong> {{user.zip}}</li>
-        <li><strong>Phone Number:</strong> {{user.phone}}</li>
-        <li><strong>Email:</strong> {{user.email}}</li>
-      </ul>
-    </div>
+    <ul>
+      <li><strong>Team Name:</strong> {{theCompetition.teamName}}</li>
+      <li><strong>Head Cook:</strong> {{theCompetition.headCook}}</li>
+      <li><strong>HC FBA Member #:</strong> {{theCompetition.fbaNum}}</li>
+      <li><strong>Address:</strong> {{theCompetition.address}}</li>
+      <li><strong>City:</strong> {{theCompetition.city}}</li>
+      <li><strong>State:</strong> {{theCompetition.state}}</li>
+      <li><strong>Zip Code:</strong> {{theCompetition.zip}}</li>
+      <li><strong>Phone Number:</strong> {{theCompetition.phone}}</li>
+      <li><strong>Email:</strong> {{theCompetition.email}}</li>
+    </ul>
+  </div>
     
   <div class="form-container">
     <h1>Application Changes</h1>
     <form action="/myprofile/update" method="POST">
       <div>
         <label for="teamName">Team Name:</label>
-        <input type="text" name="teamName" id="teamName" value="{{user.teamName}}">
+        <input type="text" name="teamName" id="teamName" value="{{theCompetition.teamName}}">
       </div>
       <div>
         <label for="headCook">Head Cook:</label>
-        <input type="text" name="headCook" id="headCook" value="{{user.headCook}}">
+        <input type="text" name="headCook" id="headCook" value="{{theCompetition.headCook}}">
       </div>
       <div>
         <label for="fbaNum">HC FBA Member #:</label>
-        <input type="number" name="fbaNum" id="fbaNum" value="{{user.fbaNum}}">
+        <input type="number" name="fbaNum" id="fbaNum" value="{{theCompetition.fbaNum}}">
       </div>
       <div>
         <label for="address">Address:</label>
-        <input type="text" name="address" id="address" value="{{user.address}}">
+        <input type="text" name="address" id="address" value="{{theCompetition.address}}">
       </div>
       <div>
         <label for="city">City:</label>
-        <input type="text" name="city" id="city" value="{{user.city}}">
+        <input type="text" name="city" id="city" value="{{theCompetition.city}}">
       </div>
       <div>
         <label for="state">State:</label>
-        <input type="text" name="state" id="state" value="{{user.state}}">
+        <input type="text" name="state" id="state" value="{{theCompetition.state}}">
       </div>
       <div>
         <label for="zip">Zip Code:</label>
-        <input type="number" name="zip" id="zip" value="{{user.zip}}">
+        <input type="number" name="zip" id="zip" value="{{theCompetition.zip}}">
       </div>
       <div>
         <label for="phone">Phone Number:</label>
-        <input type="number" name="phone" id="phone" value="{{user.phone}}">
+        <input type="number" name="phone" id="phone" value="{{theCompetition.phone}}">
       </div>
       <div>
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email" value="{{user.email}}">
+        <input type="email" name="email" id="email" value="{{theCompetition.email}}">
       </div>
       <button type="submit">Update Application</button>
     </form>
@@ -90,7 +90,6 @@
     {{/if}}
   </div>
 </body>
-
 
 <style>
 .navbar {

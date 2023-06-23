@@ -1,48 +1,65 @@
-  <nav class="navbar">
-    <ul>
-     <li>
-        <p><a href="/"> Home </a></p>
-      </li>
-       <li id="to-left">
-        <p><a href="/menu"> Menu </a></p>
-        </li>
-       <li>
-        <p><a href="/aboutus"> About Us </a></p>
-      </li>
-      <li>
-        <p><a href="/events"> Events </a></p>
-      </li>
-      <li id="to-right">
-        <a href="/myprofile/{{user._id}}">My Profile</a> <span> | </span>
-        <a href="/">Logout</a> {{!-- !!! --}}
-      </li>
-      </ul>
-      </nav>
+ <!-- myprofile.hbs -->
+
+<nav class="navbar">
+  <ul>
+    <li>
+      <p><a href="/"> Home </a></p>
+    </li>
+    <li id="to-left">
+      <p><a href="/menu"> Menu </a></p>
+    </li>
+    <li>
+      <p><a href="/aboutus"> About Us </a></p>
+    </li>
+    <li>
+      <p><a href="/events"> Events </a></p>
+    </li>
+    <li id="to-right">
+      <a href="/myprofile">My Profile</a> <span> | </span>
+      <a href="/">Logout</a>
+    </li>
+  </ul>
+</nav>
 
 <div class="image-container">
-    <img src='./images/logo2.jpg' alt="Image" class="bbq">
-    </div>
+  <img src='./images/logo2.jpg' alt="Image" class="bbq">
+</div>
+
 <div class="container">
   <h1 class="title">My Donkey's Competition Page</h1>
-
+<p>User ID: {{user._id}}</p>
   <div class="userprofile">
-    <h2><a href="/userprofile">Competition Signup</a></h2>
+    <h2><a href="/userprofile/{{currentUser._id}}">Competition Signup</a></h2>
   </div>
+
+  <div class="events">
+    <h2><a href="/events">Events</a></h2>
+  </div>
+
+  <div class="registeredevents">
+    <h2><a href="/registeredevents">Registered Events</a></h2>
+  </div>
+
+  <div class="eventchanges">
+    <h2><a href="/eventchanges">Event Changes</a></h2>
+  </div>
+
   <div class="appchanges">
-    <h2><a href="/appchanges/{{user._id}}">Application Changes</a></h2>
+    <h2><a href="/appchanges/{{competitions._id}}">Application Changes</a></h2>
   </div>
+
   <div class="appchanges">
     <h2><a href="/photos">My Gallery</a></h2>
   </div>
-<div class="appchanges">
-  <form action="/photos" method="POST" enctype="multipart/form-data">
-    <label for="photo">Upload Photo:</label>
-  <input type="file" name="photo" id="photo" accept="image/*">
-    <button type="submit" class="appchanges-btn">Upload</button>
-  </form>
+
+  <div class="appchanges">
+    <form action="/photos" method="POST" enctype="multipart/form-data">
+      <label for="photo">Upload Photo:</label>
+      <input type="file" name="photo" id="photo" accept="image/*">
+      <button type="submit" class="appchanges-btn">Upload</button>
+    </form>
   </div>
 </div>
-</body>
 
 
 <style>
