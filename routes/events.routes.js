@@ -63,39 +63,39 @@ router.get('/events/:id', async (req, res) => {
 
 // Update an event by ID
 router.put('/events/:id', async (req, res) => {
-    try {
-      // Check if user is authenticated
-      if (!req.session.currentUser) {
-        return res.status(401).json({ error: 'Authentication required' });
-      }
-  
-      const eventId = req.params.id;
-      const userId = req.session.currentUser._id;
-  
-      const updatedEvent = {
-        bandname: req.body.bandname,
-        singer: req.body.singer,
-        licensenumber: req.body.licensenumber,
-        address: req.body.address,
-        email: req.body.email,
-        user: userId
-      };
-  
-      const event = await Event.findOneAndUpdate(
-        { _id: eventId, user: userId },
-        updatedEvent,
-        { new: true }
-      ).populate('user');
-  
-      if (!event) {
-        return res.status(404).json({ error: 'Event not found' });
-      }
-  
-      res.redirect('/registeredevents'); // Redirect to the registeredevents page after successful update
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+  try {
+    // Check if user is authenticated
+    if (!req.session.currentUser) {
+      return res.status(401).json({ error: 'Authentication required' });
     }
-  });
+
+    const eventId = req.params.id;
+    const userId = req.session.currentUser._id;
+
+    const updatedEvent = {
+      bandname: req.body.bandname,
+      singer: req.body.singer,
+      licensenumber: req.body.licensenumber,
+      address: req.body.address,
+      email: req.body.email,
+      user: userId
+    };
+
+    const event = await Event.findOneAndUpdate(
+      { _id: eventId, user: userId },
+      updatedEvent,
+      { new: true }
+    ).populate('user');
+
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    res.status(200).json({ message: 'Event updated successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
 // Delete an event by ID
 router.delete('/events/:id', async (req, res) => {
