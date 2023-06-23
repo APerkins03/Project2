@@ -1,6 +1,4 @@
-<!DOCTYPE html>
 <html>
-
 <head>
   <title>Registered Events</title>
   <link rel="stylesheet" href="styles.css">
@@ -8,24 +6,7 @@
 
 <body>
   <nav class="navbar">
-    <ul>
-      <li>
-        <p><a href="/">Home</a></p>
-      </li>
-      <li id="to-left">
-        <p><a href="/menu">Menu</a></p>
-      </li>
-      <li>
-        <p><a href="/aboutus">About Us</a></p>
-      </li>
-      <li>
-        <p><a href="/events">Events</a></p>
-      </li>
-      <li id="to-right">
-        <a href="/myprofile">My Profile</a> <span> | </span>
-        <a href="/">Logout</a>
-      </li>
-    </ul>
+    <!-- Navbar code -->
   </nav>
 
   <div class="container">
@@ -33,112 +14,119 @@
     <h1>Registered Events</h1>
 
     {{#if events.length}}
-    {{#each events}}
-    <div class="event">
-      <h2>Team Name: {{bandname}}</h2>
-      <p>Head Cook: {{singer}}</p>
-      <p>FBA Number: {{licensenumber}}</p>
-      <p>Address: {{address}}</p>
-      <p>Email: {{email}}</p>
-    </div>
-    <div class="form-container">
-      <form id="updateForm">
-        <input type="hidden" name="_method" value="PUT">
+      {{#each events}}
+        <div class="event">
+          <div>
+            <h2>{{bandname}}</h2>
+            <p>Head Cook: {{singer}}</p>
+            <p>FBA Number: {{licensenumber}}</p>
+            <p>Address: {{address}}</p>
+            <p>Email: {{email}}</p>
+          </div>
+          <div class="form-container">
+            <form class="update-form" data-event-id="{{this._id}}">
+              <input type="hidden" name="_method" value="PUT">
 
-        <div class="form-group">
-          <label for="bandname">Team Name:</label>
-          <input type="text" id="bandname" name="bandname" value="{{this.bandname}}" required>
+              <label for="bandname">Team Name:</label>
+              <input type="text" id="bandname" name="bandname" value="{{this.bandname}}" required>
+
+              <label for="singer">Head Cook:</label>
+              <input type="text" id="singer" name="singer" value="{{this.singer}}" required>
+
+              <label for="licensenumber">FBA Number:</label>
+              <input type="text" id="licensenumber" name="licensenumber" value="{{this.licensenumber}}" required>
+
+              <label for="address">Address:</label>
+              <input type="text" id="address" name="address" value="{{this.address}}" required>
+
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" value="{{this.email}}" required>
+
+              <button type="submit" class="update-button">Update Event</button>
+              <button type="button" class="delete-button" data-event-id="{{this._id}}">Delete Event</button>
+            </form>
+          </div>
         </div>
-
-        <div class="form-group">
-          <label for="singer">Head Cook:</label>
-          <input type="text" id="singer" name="singer" value="{{this.singer}}" required>
-        </div>
-
-        <div class="form-group">
-          <label for="licensenumber">FBA Number:</label>
-          <input type="text" id="licensenumber" name="licensenumber" value="{{this.licensenumber}}" required>
-        </div>
-
-        <div class="form-group">
-          <label for="address">Address:</label>
-          <input type="text" id="address" name="address" value="{{this.address}}" required>
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" value="{{this.email}}" required>
-        </div>
-
-        <button type="submit" onclick="updateEvent('{{this._id}}')">Update Event</button>
-         <button type="button" onclick="deleteEvent('{{this._id}}')">Delete Event</button>
-      </form>
-    </div>
-    {{/each}}
+      {{/each}}
     {{else}}
-    <p>No events found.</p>
+      <p>No events found.</p>
     {{/if}}
   </div>
 
   <script src="./events.routes.js"></script>
   <script>
-     function updateEvent(eventId) {
-  var updatedEventData = {
-    bandname: document.getElementById('bandname').value,
-    singer: document.getElementById('singer').value,
-    licensenumber: document.getElementById('licensenumber').value,
-    address: document.getElementById('address').value,
-    email: document.getElementById('email').value,
-  };
+document.addEventListener('DOMContentLoaded', () => {
+  const updateForms = document.querySelectorAll('.update-form');
+  const deleteButtons = document.querySelectorAll('.delete-button');
 
-  fetch(`/events/${eventId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(updatedEventData),
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Event update failed');
-      }
-    })
-    .then((data) => {
-      console.log(data.message);
-      window.location.href = '/events';
-    })
-    .catch((error) => {
-      console.error(error);
+  updateForms.forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const eventId = form.dataset.eventId;
+      const updatedEventData = {
+        bandname: form.elements.bandname.value,
+        singer: form.elements.singer.value,
+        licensenumber: form.elements.licensenumber.value,
+        address: form.elements.address.value,
+        email: form.elements.email.value,
+      };
+
+      updateEvent(eventId, updatedEventData);
     });
-}
+  });
 
-  function deleteEvent(eventId) {
-    // Send a DELETE request to the server using AJAX
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      const eventId = button.dataset.eventId;
+      deleteEvent(eventId, button);
+    });
+  });
+
+      function updateEvent(eventId, updatedEventData) {
+        fetch(`/events/${eventId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedEventData),
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Event update failed');
+            }
+          })
+          .then((data) => {
+            console.log(data.message);
+            window.location.reload(); // Reload the page to reflect the updated data
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    function deleteEvent(eventId, button) {
     fetch(`/events/${eventId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
     })
-      .then(response => {
-        // Handle the response from the server
+      .then((response) => {
         if (response.ok) {
-          // The deletion was successful
           alert('Event deleted successfully');
-          // Redirect or update the UI as needed
-          window.location.href = '/registeredevents'; // Redirect to the desired page
+          // Remove the deleted event from the DOM
+          const eventElement = button.closest('.event');
+          eventElement.remove();
         } else {
-          // The deletion failed
-          alert('Failed to delete event');
+          throw new Error('Failed to delete event');
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error:', error);
         alert('An error occurred while deleting the event');
       });
   }
+});
   </script>
 </body>
-
 </html>
 
 <style>

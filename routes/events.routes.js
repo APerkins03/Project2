@@ -70,8 +70,8 @@ router.put('/events/:id', async (req, res) => {
       return res.status(401).json({ error: 'Authentication required' });
     }
 
-    const eventId = req.params.id;
     const userId = req.session.currentUser._id;
+    const eventId = req.params.id;
 
     const updatedEvent = {
       bandname: req.body.bandname,
@@ -91,9 +91,8 @@ router.put('/events/:id', async (req, res) => {
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
-    res.redirect('/myprofile');
 
-    // res.status(200).json({ message: 'Event updated successfully' });
+    res.status(200).json({ event, message: 'Event updated successfully' });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
