@@ -3,7 +3,7 @@
   <title>Registered Events</title>
 </head>
 <body>
-    <p>User ID: {{user._id}}</p>
+  <p>User ID: {{user._id}}</p>
   <h1>Registered Events</h1>
   
   {{#if events.length}}
@@ -14,30 +14,25 @@
         <p>License Number: {{licensenumber}}</p>
         <p>Address: {{address}}</p>
         <p>Email: {{email}}</p>
-        {{!-- {{#if user}}
-          <p>User ID: {{user._id}}</p>
-        {{else}}
-          <p>User ID: Not available</p>
-        {{/if}} --}}
       </div>
       <div>
-        <form action="/events/{{event._id}}" method="POST">
+        <form action="/events/{{event._id}}" method="PUT">
           <input type="hidden" name="_method" value="PUT">
 
           <label for="bandname">Band Name:</label>
-          <input type="text" name="bandname" value="{{bandname}}" required>
+          <input type="text" name="bandname" value="{{this.bandname}}" required>
 
           <label for="singer">Singer:</label>
-          <input type="text" name="singer" value="{{singer}}" required>
+          <input type="text" name="singer" value="{{this.singer}}" required>
 
           <label for="licensenumber">License Number:</label>
-          <input type="text" name="licensenumber" value="{{licensenumber}}" required>
+          <input type="text" name="licensenumber" value="{{this.licensenumber}}" required>
 
           <label for="address">Address:</label>
-          <input type="text" name="address" value="{{address}}" required>
+          <input type="text" name="address" value="{{this.address}}" required>
 
           <label for="email">Email:</label>
-          <input type="email" name="email" value="{{email}}" required>
+          <input type="email" name="email" value="{{this.email}}" required>
 
           <button type="submit">Update Event</button>
         </form>
