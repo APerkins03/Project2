@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Event = require('../models/events.model');
+const User = require('../models/user.model.js');
 
 // Render the eventchanges view and pass the event data
 router.get('/eventchanges', async (req, res) => {
