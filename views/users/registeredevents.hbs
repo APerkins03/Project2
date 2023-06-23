@@ -3,7 +3,7 @@
   <title>Registered Events</title>
 </head>
 <body>
-  <p>User ID: {{user._id}}</p>
+  <p>User ID: {{userId}}</p>
   <h1>Registered Events</h1>
   
   {{#if events.length}}
@@ -16,7 +16,7 @@
         <p>Email: {{email}}</p>
       </div>
       <div>
-        <form action="/events/{{event._id}}" method="PUT">
+        <form id="updateForm">
           <input type="hidden" name="_method" value="PUT">
 
           <label for="bandname">Band Name:</label>
@@ -34,12 +34,65 @@
           <label for="email">Email:</label>
           <input type="email" name="email" value="{{this.email}}" required>
 
-          <button type="submit">Update Event</button>
+          <button type="button" onclick="updateEvent('{{this._id}}')">Update Event</button>
+          <button type="button" onclick="deleteEvent('{{this._id}}')">Delete Event</button> <!-- New delete button -->
         </form>
       </div>
     {{/each}}
   {{else}}
     <p>No events found.</p>
   {{/if}}
+
+  <script>
+    function updateEvent(eventId) {
+      // Get the form data
+      var formData = new FormData(document.getElementById('updateForm'));
+
+      // Send a PUT request to the server using AJAX
+      fetch(`/events/${eventId}`, {
+        method: 'PUT',
+        body: formData
+      })
+        .then(response => {
+          // Handle the response from the server
+          if (response.ok) {
+            // The update was successful
+            alert('Event updated successfully');
+            // Redirect or update the UI as needed
+            window.location.href = '/registeredevents'; // Redirect to the desired page
+          } else {
+            // The update failed
+            alert('Failed to update event');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while updating the event');
+        });
+    }
+
+    function deleteEvent(eventId) {
+      // Send a DELETE request to the server using AJAX
+      fetch(`/events/${eventId}`, {
+        method: 'DELETE'
+      })
+        .then(response => {
+          // Handle the response from the server
+          if (response.ok) {
+            // The deletion was successful
+            alert('Event deleted successfully');
+            // Redirect or update the UI as needed
+            window.location.href = '/registeredevents'; // Redirect to the desired page
+          } else {
+            // The deletion failed
+            alert('Failed to delete event');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while deleting the event');
+        });
+    }
+  </script>
 </body>
 </html>
