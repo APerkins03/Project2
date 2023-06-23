@@ -66,9 +66,10 @@ router.post("/login", (req, res, next) => {
         return;
       } else if (foundUser.passwordHash && bcryptjs.compareSync(password, foundUser.passwordHash)) {
         if (foundUser.verified) {
+          
           req.session.currentUser = foundUser;
           req.flash("success", "Successfully logged in");
-          res.redirect('/myprofile');
+          res.redirect('/myprofile/' + foundUser._id); // Redirect to the user's specific account page
         } else {
           req.flash("error", "Account is not verified");
           res.redirect("/login");
@@ -81,12 +82,35 @@ router.post("/login", (req, res, next) => {
     .catch(error => next(error));
 });
 
-router.get("/appchanges", (req, res, next) => {
+router.get("/appchanges/:id", (req, res, next) => {
   res.render("users/appchanges");
 });
-router.post('/appchanges', isLoggedIn, (req, res, next) => {
+router.get("/appchanges/:id/", (req, res, next) => {
+  const userId = req.params.id;
+  const competitionId = req.params.id;
+
+  Competition.findById(competitionId)
+    .then((theCompetition) => {
+      if (!theCompetition) {
+        req.flash("error", "Competition not found");
+        res.redirect('/myprofile/' + req.params.id);
+        return;
+      }
+
+      res.render("users/appchanges", { theCompetition: theCompetition, userId: userId }); // Pass the user ID to the view
+    })
+    .catch((err) => {
+      console.log(err);
+      req.flash("error", "Failed to fetch competition information");
+      res.redirect("/myprofile/" + req.params.id);
+    });
+});
+
+router.post('/appchanges/:id/update', isLoggedIn, (req, res, next) => {
+  const competitionId = req.params.id;
+  const userId = req.session.currentUser._id; // Retrieve the user ID from the session
   const { teamName, headCook, fbaNum, address, city, state, zip, phone, email } = req.body;
-  const userData = {
+  const competitionData = {
     teamName,
     headCook,
     fbaNum,
@@ -95,27 +119,27 @@ router.post('/appchanges', isLoggedIn, (req, res, next) => {
     state,
     zip,
     phone,
-    email
+    email,
+    user: userId
   };
 
-  // Update the user's profile in the database
-  User.findByIdAndUpdate(
-    req.session.currentUser._id,
-    userData,
-    { new: true }
-  )
-    .then(updatedUser => {
-      if (!updatedUser) {
-        req.flash('error', 'User not found');
-        res.redirect('/login');
+  // Update the competition in the database
+  Competition.findByIdAndUpdate(competitionId, competitionData, { new: true })
+    .then((updatedCompetition) => {
+      if (!updatedCompetition) {
+        req.flash('error', 'Competition not found');
+        res.redirect('/myprofile/' + userId); // Redirect to the user's specific account page using the user ID
         return;
       }
 
-      // Redirect to the appropriate page after updating the user profile
-      req.flash('success', 'Profile updated successfully');
-      res.redirect('/myprofile');
+      req.flash('success', 'Competition updated successfully');
+      res.redirect('/myprofile/' + userId); // Redirect to the user's specific account page using the user ID
     })
-    .catch(error => next(error));
+    .catch((error) => {
+      console.error(error);
+      req.flash('error', 'Failed to update competition');
+      res.redirect('/myprofile/' + userId); // Redirect to the user's specific account page using the user ID
+    });
 });
 
 
@@ -201,7 +225,7 @@ router.get('/userprofile', (req, res, next) => {
     
 
   
-  router.get('/myprofile', isLoggedIn, (req, res, next) => {
+      router.get("/myprofile/:id", (req, res) => {
     // Check if the user is logged in
     if (!req.session.currentUser) {
       res.redirect('/login');

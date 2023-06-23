@@ -13,7 +13,7 @@
         <p><a href="/events"> Events </a></p>
       </li>
       <li id="to-right">
-        <a href="/myprofile">My Profile</a> <span> | </span>
+        <a href="/myprofile/{{user._id}}">My Profile</a> <span> | </span>
         <a href="/">Logout</a> {{!-- !!! --}}
       </li>
       </ul>
@@ -29,7 +29,7 @@
     <h2><a href="/userprofile">Competition Signup</a></h2>
   </div>
   <div class="appchanges">
-    <h2><a href="/appchanges">Application Changes</a></h2>
+    <h2><a href="/appchanges/{{user._id}}">Application Changes</a></h2>
   </div>
   <div class="appchanges">
     <h2><a href="/photos">My Gallery</a></h2>
