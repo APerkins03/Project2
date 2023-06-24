@@ -2,101 +2,185 @@
 <head>
   <title>Registered Events</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .event-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 120px;
+    }
+
+    .event {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      flex-basis: 48%;
+    }
+
+    .form-container {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      margin-top: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    button[type="submit"],
+    button[type="button"] {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button[type="submit"] {
+      background-color: #4caf50;
+      color: #fff;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    button[type="button"] {
+      background-color: #f44336;
+      color: #fff;
+    }
+
+    button[type="button"]:hover {
+      background-color: #d32f2f;
+    }
+
+    p {
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
 </head>
-<nav class="navbar">
-  <ul>
-    <li>
-      <p><a href="/"> Home </a></p>
-    </li>
-    <li id="to-left">
-      <p><a href="/menu"> Menu </a></p>
-    </li>
-    <li>
-      <p><a href="/aboutus"> About Us </a></p>
-    </li>
-    <li id="to-right">
-      <a href="/myprofile">My Profile</a> <span> | </span>
-      <a href="/">Logout</a>
-    </li>
-  </ul>
-</nav>
 <body>
   <nav class="navbar">
-    <!-- Navbar code -->
+    <ul>
+      <li>
+        <p><a href="/"> Home </a></p>
+      </li>
+      <li id="to-left">
+        <p><a href="/menu"> Menu </a></p>
+      </li>
+      <li>
+        <p><a href="/aboutus"> About Us </a></p>
+      </li>
+      <li id="to-right">
+        <a href="/myprofile">My Profile</a> <span> | </span>
+        <a href="/">Logout</a>
+      </li>
+    </ul>
   </nav>
-
+<div class ="welcome">
+       <section>
+      <p class="username">Welcome {{user.username}}</p>
+    </section>
+    <section>
+      <h1>Registered Events</h1>
+    </section>
+</div>
+  
   <div class="container">
-    <p class="username">Welcome {{user.username}}</p>
-    <h1>Registered Events</h1>
+
 
     {{#if events.length}}
-      {{#each events}}
-        <div class="event">
-          <div>
+      <div class="event-container">
+        {{#each events}}
+          <div class="event">
             <h2>{{bandname}}</h2>
             <p>Head Cook: {{singer}}</p>
             <p>FBA Number: {{licensenumber}}</p>
             <p>Address: {{address}}</p>
             <p>Email: {{email}}</p>
+            <div class="form-container">
+              <form class="update-form" data-event-id="{{this._id}}">
+                <input type="hidden" name="_method" value="PUT">
+
+                <label for="bandname">Team Name:</label>
+                <input type="text" id="bandname" name="bandname" value="{{this.bandname}}" required>
+
+                <label for="singer">Head Cook:</label>
+                <input type="text" id="singer" name="singer" value="{{this.singer}}" required>
+
+                <label for="licensenumber">FBA Number:</label>
+                <input type="text" id="licensenumber" name="licensenumber" value="{{this.licensenumber}}" required>
+
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" value="{{this.address}}" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{this.email}}" required>
+
+                <button type="submit" class="update-button">Update Event</button>
+                <button type="button" class="delete-button" data-event-id="{{this._id}}">Delete Event</button>
+              </form>
+            </div>
           </div>
-          <div class="form-container">
-            <form class="update-form" data-event-id="{{this._id}}">
-              <input type="hidden" name="_method" value="PUT">
-
-              <label for="bandname">Team Name:</label>
-              <input type="text" id="bandname" name="bandname" value="{{this.bandname}}" required>
-
-              <label for="singer">Head Cook:</label>
-              <input type="text" id="singer" name="singer" value="{{this.singer}}" required>
-
-              <label for="licensenumber">FBA Number:</label>
-              <input type="text" id="licensenumber" name="licensenumber" value="{{this.licensenumber}}" required>
-
-              <label for="address">Address:</label>
-              <input type="text" id="address" name="address" value="{{this.address}}" required>
-
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email" value="{{this.email}}" required>
-
-              <button type="submit" class="update-button">Update Event</button>
-              <button type="button" class="delete-button" data-event-id="{{this._id}}">Delete Event</button>
-            </form>
-          </div>
-        </div>
-      {{/each}}
+        {{/each}}
+      </div>
     {{else}}
       <p>No events found.</p>
     {{/if}}
   </div>
-
   <script src="./events.routes.js"></script>
   <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const updateForms = document.querySelectorAll('.update-form');
-  const deleteButtons = document.querySelectorAll('.delete-button');
+    document.addEventListener('DOMContentLoaded', () => {
+      const updateForms = document.querySelectorAll('.update-form');
+      const deleteButtons = document.querySelectorAll('.delete-button');
 
-  updateForms.forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const eventId = form.dataset.eventId;
-      const updatedEventData = {
-        bandname: form.elements.bandname.value,
-        singer: form.elements.singer.value,
-        licensenumber: form.elements.licensenumber.value,
-        address: form.elements.address.value,
-        email: form.elements.email.value,
-      };
+      updateForms.forEach((form) => {
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const eventId = form.dataset.eventId;
+          const updatedEventData = {
+            bandname: form.elements.bandname.value,
+            singer: form.elements.singer.value,
+            licensenumber: form.elements.licensenumber.value,
+            address: form.elements.address.value,
+            email: form.elements.email.value,
+          };
 
-      updateEvent(eventId, updatedEventData);
-    });
-  });
+          updateEvent(eventId, updatedEventData);
+        });
+      });
 
-  deleteButtons.forEach((button) => {
-    button.addEventListener('click', (event) => {
-      const eventId = button.dataset.eventId;
-      deleteEvent(eventId, button);
-    });
-  });
+      deleteButtons.forEach((button) => {
+        button.addEventListener('click', (event) => {
+          const eventId = button.dataset.eventId;
+          deleteEvent(eventId, button);
+        });
+      });
 
       function updateEvent(eventId, updatedEventData) {
         fetch(`/events/${eventId}`, {
@@ -121,168 +205,195 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(error);
           });
       }
-    function deleteEvent(eventId, button) {
-    fetch(`/events/${eventId}`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert('Event deleted successfully');
-          // Remove the deleted event from the DOM
-          const eventElement = button.closest('.event');
-          eventElement.remove();
-        } else {
-          throw new Error('Failed to delete event');
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        alert('An error occurred while deleting the event');
-      });
-  }
-});
+
+      function deleteEvent(eventId, button) {
+        fetch(`/events/${eventId}`, {
+          method: 'DELETE',
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert('Event deleted successfully');
+              // Remove the deleted event from the DOM
+              const eventElement = button.closest('.event');
+              eventElement.remove();
+            } else {
+              throw new Error('Failed to delete event');
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the event');
+          });
+      }
+    });
   </script>
 </body>
 </html>
-
 <style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+  }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-}
+  .navbar {
+    font-size: 16px;
+    background-color: #333;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+  }
 
-.navbar {
-  font-size: 16px;
-  background-color: #333;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  z-index: 999;
-}
+  .navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
 
-.navbar ul {
-  list-style-type: none;
-  margin: 0;
-  padding-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
+  .navbar ul li {
+    margin: 0 10px;
+    flex: 1;
+    text-align: center;
+    color: #fff;
+  }
 
-.navbar ul li {
-  margin: 0 10px;
-  flex: 1;
-  text-align: center;
-  color: #fff;
-}
+  .navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
 
-.navbar ul li a {
-  color: #fff;
-  text-decoration: none;
-}
+  .navbar ul li#to-right {
+    margin-right: 20px;
+  }
 
-.navbar ul li#to-right {
-  margin-right: 20px;
-}
 
-.container {
+
+/*-- Welcome --*/
+
+.welcome {
   margin-top: 80px;
   padding: 20px;
+  justify-content: center;
 }
-
-.username {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333333;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-h1 {
-  font-size: 32px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.event {
-  background-color: #f9f9f9;
+.welcome p {
+  margin-top: 80px;
   padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  margin: 0 auto;
-  max-width: 400px;
+  justify-content: center;
+  font-size: 60px;
 }
 
-.form-container {
-  background-color: #f9f9f9;
+.welcome h1 {
+  margin-top: 10px;
   padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  margin: 0 auto;
-  max-width: 400px;
+  justify-content: center;
+  font-size: 48px;
 }
 
-.form-group {
-  margin-bottom: 10px;
-  text-align: left;
-}
+  .container {
+    
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-label {
-  display: block;
-  font-weight: bold;
-  text-align: left;
-}
+  .username {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-input[type="text"],
-input[type="email"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  text-align: center;
-}
+  h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-button[type="submit"],
-button[type="button"] {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-}
+  .event {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 10px;
+    max-width: 400px;
+    flex: 1 1 400px;
+  }
 
-button[type="submit"] {
-  background-color: #4caf50;
-  color: #fff;
-}
+  .form-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 10px;
+    max-width: 400px;
+    flex: 1 1 400px;
+  }
 
-button[type="submit"]:hover {
-  background-color: #45a049;
-}
+  .form-group {
+    margin-bottom: 10px;
+    text-align: left;
+  }
 
-button[type="button"] {
-  background-color: #f44336;
-  color: #fff;
-}
+  label {
+    display: block;
+    font-weight: bold;
+    text-align: left;
+  }
 
-button[type="button"]:hover {
-  background-color: #d32f2f;
-}
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+  }
 
-p {
-  margin-bottom: 10px;
-  text-align: center;
-}
+  button[type="submit"],
+  button[type="button"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  button[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  button[type="button"] {
+    background-color: #f44336;
+    color: #fff;
+  }
+
+  button[type="button"]:hover {
+    background-color: #d32f2f;
+  }
+
+  p {
+    margin-bottom: 10px;
+    text-align: center;
+  }
 </style>
